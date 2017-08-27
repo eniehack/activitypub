@@ -118,11 +118,17 @@
   <body>
     <section id="abstract">
       <p>
+<!--
         The ActivityPub protocol is a decentralized social networking protocol
         based upon the [[!ActivityStreams]] 2.0 data format.
         It provides a client to server API for creating, updating and deleting
         content, as well as a federated server to server API for delivering
         notifications and content.
+-->
+ActivityPub プロトコルは、[[!ActivityStreams]] 2.0 データ形式を基とした
+非中央集権型ソーシャルネットワークプロトコルである。
+これはコンテンツの作成、更新、削除のためのクライアント-サーバ間 API および、
+通知とコンテンツを配送するための連合サーバ間 API を提供する。
       </p>
     </section>
 
@@ -132,15 +138,25 @@
     <section id="Overview">
       <h2>Overview</h2>
 
+<!--
       <p>ActivityPub provides two layers:</p>
+-->
+      <p>ActivityPub は二つの層を提供します:</p>
 
       <ul>
         <li>
+<!--
           <b>A server to server federation protocol</b>
           (so decentralized websites can share information)
+-->
+          <b>サーバからサーバへの連合プロトコル</b>
+          (これにより非中央集権ウェブサイトが情報を共有できます)
         </li>
         <li>
+<!--
           <b>A client to server protocol</b>
+-->
+          <b>クライアントからサーバへのプロトコル</b>
           (so users, including real-world users, bots, and other automated processes,
           can communicate with ActivityPub using their accounts on servers,
           from a phone or desktop or web application or whatever)
@@ -158,15 +174,27 @@
       </p>
 
       <p>
+<!--
         In ActivityPub, a user is represented by "<a href="#actors">actors</a>"
         via the user's accounts on servers.
         User's accounts on different servers correspond to different actors.
+-->
+        ActivityPub では、ユーザーはサーバ上のアカウントを通して
+        <a href="#actors">actor</a> として表現されます。
+        異なるサーバのユーザーアカウントはそれぞれ異なった actor に対応します。
+<!--
         Every Actor has:
+-->
+        全ての actor は次のものを持ちます:
       </p>
 
       <ul>
+<!--
         <li><b>An <code>inbox</code>:</b>  How they get messages from the world</li>
         <li><b>An <code>outbox</code>:</b> How they send messages to others</li>
+-->
+        <li><b><code>inbox</code>:</b>  世界中からメッセージを受け取る場所</li>
+        <li><b><code>outbox</code>:</b> 他へメッセージを送る場所</li>
       </ul>
 
       <p>
@@ -175,13 +203,21 @@
       </p>
 
       <p>
+<!--
         These are endpoints, or really, just URLs which are listed in the
         ActivityPub actor's ActivityStreams description.
         (More on ActivityStreams later).
+-->
+        これらはエンドポイント、つまり実際には ActivityPub actor の
+        ActivityStreams 記述にある単なる URL です。
+        (ActivityStreams については後に触れます。)
       </p>
 
       <p>
+<!--
         Here's an example of the record of our friend Alyssa P. Hacker:
+-->
+        以下は、我が友 Alyssa P. Hacker の記録の例です:
       </p>
 
       <pre class="example highlight json">
@@ -199,28 +235,53 @@
       </pre>
 
       <p>
+<!--
         ActivityPub uses [[!ActivityStreams]] for its vocabulary.
         This is pretty great because ActivityStreams includes all the common
         terms you need to represent all the activities and content flowing
         around a social network.
+-->
+ActivityPub は語彙として [[!ActivityStreams]] を使います。
+これはなかなか素晴らしいことです; ActivityStreams はソーシャルネットワークに
+流れる全てのアクティビティと内容を表現する全ての一般的な用語を
+含んでいるからです。
+<!--
         It's likely that ActivityStreams already includes all the vocabulary
         you need, but even if it doesn't, ActivityStreams can be extended
         via [[!JSON-LD]].
         If you know what JSON-LD is, you can take advantage of the cool linked
         data approaches provided by JSON-LD.
+-->
+おそらく ActivityStreams は既にあなたが必要な全ての語彙を
+含んでいるでしょうが、もしそうでなければ、ActivityStreams は
+[[!JSON-LD]] を使って拡張できます。
+あなたが JSON-LD について知っているなら、JSON-LD によって提供される
+クールなリンク付きデータ手法の有用性を使えます。
+<!--
         If you don't, don't worry, JSON-LD documents and ActivityStreams can be
         understood as plain old simple JSON.
         (If you're going to add extensions, that's the point at which JSON-LD
         really helps you out).
+-->
+もしそうでなくても、心配は要りません; JSON-LD 文書と ActivityStreams は
+どちらも単なる単純な JSON として理解すればよいです。
+(もし拡張を追加しようとしているなら、ここが本当に JSON-LD が助けになるところです。)
       </p>
 
       <p>
+<!--
         So, okay.
         Alyssa wants to talk to her friends, and her friends want to talk to
         her!
         Luckily these "inbox" and "outbox" things can help us out.
         They both behave differently for GET and POST.
         Let's see how that works:
+-->
+        さて。
+        Alyssa は彼女の友人と話したいと思っていて、彼女の友人も彼女と
+        話したいと思っています!
+        幸いにもこれらの "inbox" と "outbox" がその助けになります。
+        これらはそれぞれ GET と POST で異なった振る舞いをします:
       </p>
 
       <p>
@@ -229,44 +290,79 @@
       </p>
 
       <p>
+<!--
         Hey nice, so just as a recap:
+-->
+        では、ここでおさらいです:
       </p>
 
       <ul>
         <li>
+<!--
           You can POST to someone's inbox to send them a message
+-->
+          あなたは誰かにメッセージを送るためにその人の inbox に POST できます
           (server-to-server / federation only... this <em>is</em> federation!)
         </li>
         <li>
+<!--
           You can GET from your inbox to read your latest messages
           (client-to-server; this is like reading your social
           network stream)
+-->
+あなたはあなたの最新のメッセージを読むためにあなたの inbox を GET できます
+(クライアントからサーバ; これはあなたのソーシャルネットワークストリームを
+読むようなものです)
         </li>
         <li>
+<!--
           You can POST to your outbox to send messages to the world
           (client-to-server)
+-->
+          あなたは世界中にメッセージを送るためにあなたの outbox に
+          POST できます
+          (クライアントからサーバ)
         </li>
         <li>
+<!--
           You can GET from someone's outbox to see what messages they've
           posted (or at least the ones you're authorized to see).
           (client-to-server and/or server-to-server)
+-->
+          あなたは誰か(あるいは少なくともあなたが読むことを許されている人)が
+          どんなメッセージを書いたかを見るためにその人の outbox を
+          GET できます。
+          (クライアントからサーバとサーバからサーバ)
         </li>
       </ul>
  
       <p>
+<!--
         Of course, if that last one (GET'ing from someone's outbox) was the
         only way to see what people have sent, this wouldn't be a very
         efficient federation protocol!
         Indeed, federation happens usually by servers posting messages sent by
         actors to actors on other servers' inboxes.
+-->
+        もちろん、もし最後のもの (誰かの outbox を GET する) が、人々が
+        送っているものを見る唯一の方法なら、これはとても効率的な
+        連合プロトコルとは言えません!
+        実際には、連合は普通サーバが他のサーバのactorのinboxに送るときに起こります。
       </p>
 
       <p>
+<!--
         Let's see an example!
         Let's say Alyssa wants to catch up with her friend, Ben Bitdiddle.
         She lent him a book recently and she wants to make sure he returns it
         to her.
         Here's the message she composes, as an ActivityStreams object:
+-->
+        例を見てみましょう!
+        Alyssa は友人である Ben Bitdiddle と話したいとします。
+        彼女は彼に最近本を貸していて、それを返してくれるか確認したいです。
+        以下は、彼女が書いた、ActivityStreams オブジェクトとしての
+        メッセージです。
       </p>
 
       <pre class="example highlight json">
@@ -278,8 +374,12 @@
       </pre>
 
       <p>
+<!--
         This is a note addressed to Ben.
         She POSTs it to her outbox.
+-->
+        これは Ben に向けた note です。
+        彼女はこれを彼女の outbox に POST します。
       </p>
 
       <p>
@@ -288,6 +388,7 @@
       </p>
 
       <p>
+<!--
         Since this is a non-activity object, the server recognizes that this is
         an object being newly created, and does the courtesy of wrapping it in
         a Create activity.
@@ -295,6 +396,15 @@
         some activity by some actor being taken on some object.
         In this case the activity is a Create of a Note object, posted by a
         Person).
+-->
+        これは非アクティビティオブジェクトなので、サーバは
+        これは新しく作成されたオブジェクトと認識し、これを
+        Create アクティビティにラッピングします。
+        (ActivityPub で送られる Activity は一般的に
+ある actor があるオブジェクトに対して行われるアクティビティ、という
+パターンに従います。
+この場合は、アクティビティは Person によって投稿される Note オブジェクトの
+Create です。)
       </p>
 
 
@@ -312,8 +422,13 @@
       </pre>
 
       <p>
+<!--
         Alyssa's server looks up Ben's ActivityStreams actor object, finds his
         inbox endpoint, and POSTs her object to his inbox.
+-->
+        Alyssa のサーバは Ben の ActivityStreams actor オブジェクトを探し、
+        彼の inbox エンドポイントを見つけ、彼の inbox に彼女のオブジェクトを
+        POST します。
       </p>
 
       <p>
@@ -322,10 +437,16 @@
       </p>
 
       <p>
+<!--
         Technically these are two separate steps... one is client to server
         communication, and one is server to server communication (federation).
         But, since we're using them both in this example, we can abstractly
         think of this as being a streamlined submission from outbox to inbox:
+-->
+        技術的にはこれは二つに分割されたステップです…一つ目は
+クライアントからサーバへの通信、もう一つはサーバからサーバへの通信(連合)です。
+しかし、この例では両方を使っているので、
+outbox から inbox への一連の流れとしての投稿と抽象化して考えられます:
       </p>
 
       <p>
@@ -334,11 +455,19 @@
       </p>
 
       <p>
+<!--
         Cool!
         A while later, Alyssa checks what new messages she's gotten.
         Her phone polls her inbox via GET, and amongst a bunch of cat videos
         posted by friends and photos of her nephew posted by her sister, she
         sees the following:
+-->
+        すばらしい!
+        しばらく後に、Alyssa は彼女が受け取った新しいメッセージを
+        チェックします。
+        彼女のスマートフォンは彼女の inbox を GET でポーリングし、
+        友人が投稿した大量の猫動画や姉が投稿した甥の写真の中から、
+        彼女は次のメッセージを見つけます:
       </p>
 
       <pre class="example highlight json">
@@ -357,7 +486,10 @@
                              since it's been a while since I wrote one.&lt;/p&gt;"}}
       </pre>
 
+<!--
       <p>Alyssa is relieved, and likes Ben's post:</p>
+-->
+      <p>Alyssa はほっとして、Ben の投稿に「いいね」します:</p>
 
       <pre class="example highlight json">
   {"@context": "https://www.w3.org/ns/activitystreams",
@@ -369,17 +501,29 @@
       </pre>
 
       <p>
+<!--
         She POSTs this message to her outbox.
         (Since it's an activity, her server knows it doesn't need to wrap it in
         a Create object).
+-->
+        彼女はこのメッセージを彼女の outbox に POST します。
+        (これは activity なので、彼女のサーバは
+        これを Create オブジェクトでラップする必要がないことを分かっています。)
       </p>
 
       <p>
+<!--
         Feeling happy about things, she decides to post a public message to her
         followers.
         Soon the following message is blasted to all the members of her
         followers collection, and since it has the special Public group
         addressed, is generally readable by anyone.
+-->
+        幸せな気分になったので、彼女は彼女のフォロワーに公開メッセージを
+        投稿することにしました。
+        ほどなくして以下のメッセージが彼女の followers コレクションの全ての
+        メンバーに送信され、またこれは特殊な Public グループ宛になっているので、
+        誰でも一般に読むことができます。
       </p>
 
       <pre class="example highlight json">
@@ -414,22 +558,43 @@
 
     <section id="conformance">
       <section id="specification-profiles">
+<!--
         <h2>Specification Profiles</h2>
+-->
+        <h2>仕様プロファイル</h2>
         <p>
+<!--
           This specification defines two closely related and interacting
           protocols:
+-->
+この仕様は、密接に関連し相互に作用する二つのプロトコルを定義する:
         </p>
         <dl>
+<!--
           <dt>A client to server protocol, or "Social API"</dt>
+-->
+          <dt>クライアント-サーバ間プロトコル(ソーシャル API)</dt>
           <dd>
+<!--
             This protocol permits a client to act <i>on behalf</i> of a user.
             For example, this protocol is used by a mobile phone application to
             interact with a social stream of the user's actor.
+-->
+このプロトコルは、クライアントがユーザーに<i>代わって</i>行動することを認める。
+例えば、このプロトコルはあるユーザーのactorのソーシャルストリームに
+相互作用するモバイルフォンアプリケーションで使われる。
           </dd>
+<!--
           <dt>A server to server protocol, or "Federation Protocol"</dt>
+-->
+          <dt>サーバ-サーバ間プロトコル(連合プロトコル)</dt>
           <dd>
+<!--
             This protocol is used to distribute activities between actors on
             different servers, tying them into the same social graph.
+-->
+このプロトコルは、異なるサーバにあり、同じソーシャルグラフ上で
+結びつけられているactorの間でアクティビティを配布するために使われる。
           </dd>
         </dl>
         <p>
@@ -440,17 +605,26 @@
           This gives three conformance classes:
         </p>
         <dl>
+<!--
           <dt>ActivityPub conformant Client</dt>
+-->
+          <dt>ActivityPub 準拠クライアント</dt>
           <dd>
             This designation applies to any implementation of the entirety of the
             client portion of the client to server protocol.
           </dd>
+<!--
           <dt>ActivityPub conformant Server</dt>
+-->
+          <dt>ActivityPub 準拠サーバ</dt>
           <dd>
             This designation applies to any implementation of the entirety of the
             server portion of the client to server protocol.
           </dd>
+<!--
           <dt>ActivityPub conformant Federated Server</dt>
+-->
+          <dt>ActivityPub 準拠連合サーバ</dt>
           <dd>
             This designation applies to any implementation of the entirety of
             the federation protocols.
@@ -468,8 +642,12 @@
     </section>
 
     <section id="obj">
+<!--
       <h2>Objects</h2>
+-->
+      <h2>オブジェクト</h2>
       <p>
+<!--
         Objects are the core concept around which both [[!ActivityStreams]] and
         ActivityPub are built.
         Objects are often wrapped in Activities and are contained in streams of
@@ -477,8 +655,16 @@
         See the [[!Activity-Vocabulary]] document, particularly the
         <a href="https://www.w3.org/TR/activitystreams-vocabulary/#types">Core Classes</a>;
         ActivityPub follows the mapping of this vocabulary very closely.
+-->
+オブジェクトは [[!ActivityStreams]] と ActivityPub 両方の中核となる概念である。
+オブジェクトはしばしば Activity でラッピングされ、自身が Object の
+サブクラスである Collection に含まれる。
+[[!Activity-Vocabulary]] 文書、特に
+<a href="https://www.w3.org/TR/activitystreams-vocabulary/#types">Core Classes</a> を参照のこと;
+ActivityPub はこの語彙のマッピングに非常に密接に従う。
       </p>
       <p>
+<!--
         ActivityPub defines some terms in addition to those provided by
         ActivityStreams.
         These terms are provided in the ActivityPub
@@ -488,13 +674,29 @@
         Implementers SHOULD include the ActivityPub context in their
         object definitions.
         Implementers MAY include additional context as appropriate.
+-->
+ActivityPub は ActivityStreams によって提供されるものに加えていくつかの
+用語を定義している。
+これらの用語は
+<code>https://www.w3.org/ns/activitystreams</code> で
+ActivityPub
+<a href="http://www.w3.org/TR/json-ld/#the-context">JSON-LD context</a>
+として提供される。
+実装者はそのオブジェクト定義に ActivityPub context を含むべきである(SHOULD)。
+実装者は追加の context を必要に応じて含んでも良い(MAY)。
       </p>
       <p>
+<!--
         ActivityPub shares the same
         <a href="https://www.w3.org/TR/activitystreams-core/#urls">
           URI / IRI conventions as in ActivityStreams</a>.
+-->
+ActivityPub は
+        <a href="https://www.w3.org/TR/activitystreams-core/#urls">
+          ActivityStreams の URI / IRI 仕様</a> と同じものを共有する。
       </p>
       <p>
+<!--
         Servers SHOULD validate the content they receive to avoid content
         spoofing attacks.
         (A server should do something at least as robust as checking that
@@ -503,9 +705,22 @@
         No particular mechanism for verification is authoritatively specified by
         this document, but please see <a href="#security-considerations">Security 
         Considerations</a> for some suggestions and good practices.
+-->
+サーバはコンテンツスプーフィング攻撃を防ぐために受信したコンテンツを
+検証するべきである(SHOULD)。
+サーバは少なくとも、そのオブジェクトがその発信元から受信したをチェックするのと
+同じぐらい頑強な何かをするべきであるが、
+可能であれば署名検証のような機構が望ましい。)
+特定の検証機構をこの文書で命令的に指定することはしないが、
+いくつかの提案と良い習慣については
+<a href="#security-considerations">Security 
+        Considerations</a> を参照してほしい。
       </p>
       <div class="informative">
+<!--
         As an example, if example.com receives the activity
+-->
+例えば、example.com が次のアクティビティを受信すると、
         <pre class="example">
          {
            "@context": "https://www.w3.org/ns/activitystreams",
@@ -522,14 +737,24 @@
            }
          }
         </pre>
+<!--
         it should dereference the <code>id</code> both to ensure that it exists
         and is a valid object, and that it is not misrepresenting the object.
         (In this example, Mallory could be spoofing an object allegedly posted
         by Alice).
+-->
+<code>id</code> を逆参照して、これが存在して妥当なオブジェクトであり、
+このオブジェクトが不正確ではないことを確認するべきである。
+(この例では、Mallory が Alice によって投稿されたとされているオブジェクトを
+捏造している可能性がある。)
       </div>
       <section id="obj-id">
+<!--
         <h2>Object Identifiers</h2>
+-->
+        <h2>オブジェクト識別子</h2>
         <p>
+<!--
           All Objects in [[!ActivityStreams]] should have unique global
           identifiers.
           ActivityPub extends this requirement; all objects distributed by the
@@ -538,43 +763,83 @@
           intended to be able to be looked up, such as some kinds of chat
           messages or game notifications).
           These identifiers must fall into one of the following groups:
+-->
+[[!ActivityStreams]] の全てのオブジェクトはユニークなグローバル識別子を
+付けるべきとされている。
+ActivityPub はこの要求を拡張する。
+ActivityPub プロトコルで配布される全てのオブジェクトは、
+意図的に一時的なもの(ある種のチャットメッセージやゲーム通知のような、短命の
+アクティビティで検索されることを意図していないもの)でない限り、
+ユニークなグローバル識別子を持たなければならない(MUST)。
+これらの識別子は以下のグループのどれか一つでなければならない:
         </p>
         <ol>
           <li>
+<!--
             Publicly dereferencable URIs, such as HTTPS URIs, with their
             authority belonging to that of their originating server.
             (Publicly facing content SHOULD use HTTPS URIs).
+-->
+HTTPS URI のような、公に展開可能な URI で、その権限が発信元サーバに帰属するもの。
+(公開用のコンテンツは HTTPS URI を使うべきである(SHOULD)。)
           </li>
           <li>
+<!--
             An ID explicitly specified as the JSON <code>null</code> object,
             which implies an anonymous object (a part of its parent context)
+-->
+明示的に JSON <code>null</code> オブジェクトとして指定された ID;
+この場合は無名オブジェクト(親コンテキストの一部) を意味する。
           </li>
         </ol>
         <p>
+<!--
           Identifiers MUST be provided for activities posted in server to
           server communication, unless the activity is intentionally transient.
           However, for client to server communication, a server receiving an
           object posted to the outbox with no specified <code>id</code> SHOULD
           allocate an object ID in the actor's namespace and attach it to the
           posted object.
+-->
+識別子は、アクティビティが意図的に一時的なものでない限り、
+サーバからサーバへの通信で投稿するアクティビティでは
+提供しなければならない(MUST)。
+しかし、クライアントからサーバへの通信では、<code>id</code> の指定なしに
+outbox に投稿されたオブジェクトを受信したサーバは、
+その actor の名前空間の ID を割り当て、投稿されたオブジェクトに
+それを添付するべきである(SHOULD)。
         </p>
+<!--
         <p>All objects have the following properties:</p>
+-->
+        <p>全てのオブジェクトは以下の属性を持つ:</p>
         <dl>
           <dt>id</dt>
           <dd>
+<!--
             The object's unique global identifier (unless the object is transient,
             in which case the <code>id</code> MAY be omitted).
+-->
+オブジェクトのユニークなグローバル識別子(オブジェクトが一時的なものの場合を
+除く; この場合 <code>id</code> は省略しても良い(MAY))。
           </dd>
           <dt>type</dt>
           <dd>
+<!--
             The type of the object.
+-->
+オブジェクトの型。
           </dd>
         </dl>
       </section>
 
       <section id="retrieving-objects">
+<!--
         <h2>Retrieving objects</h2>
+-->
+        <h2>オブジェクトの取得</h2>
         <p>
+<!--
           The HTTP GET method may be dereferenced against an object's
           <code>id</code> property to retrieve the activity.
           Servers MAY use HTTP content negotiation as defined in [[!RFC7231]] to
@@ -587,15 +852,38 @@
           The client MUST specify an <code>Accept</code> header with the
           <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
           media type in order to retrieve the activity.
+-->
+HTTP GET メソッドは、アクティビティを取得するためのオブジェクトの
+<code>id</code> 属性として展開されることがある。
+リクエストに対するレスポンスとして返すデータの種類を選択するために、
+サーバは [[!RFC7231]] で定義されている
+HTTP content negotiation を使っても良い(MAY)。
+          <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
+への返答として
+ActivityStreams オブジェクト表現を表現しなければならず(MUST)、
+<code>application/activity+json</code>
+への返答としても ActivityStreams 表現を表現するべきである(SHOULD)。
+クライアントはアクティビティを取得するために
+<code>Accept</code> ヘッダに
+<code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
+メディアタイプを指定しなければならない(MUST)。
         </p>
         <p>
+<!--
           Servers MAY implement other behavior for requests which do not comply
           with the above requirement.
           (For example, servers may implement additional legacy protocols, or
           may use the same URI for both HTML and ActivityStreams
           representations of a resource).
+-->
+サーバは前述する要求に従わないリクエストに対して他の振る舞いを
+実装しても良い(MAY)。
+(例えば、サーバは追加でレガシーなプロトコルを実装しても良いし、
+あるリソースの HTML 表現と ActivityStreams 表現で同じ
+URI を使っても良い。)
         </p>
         <p>
+<!--
           Servers MAY require authorization as specified in
           <a href="#authorization"></a>, and may additionally implement their
           own authorization rules.
@@ -605,12 +893,25 @@
           An origin server which does not wish to disclose the existence of
           a private target MAY instead respond with a status code of
           404 Not Found.
+-->
+サーバは <a href="#authorization"></a> で指定された認証を要求したり、
+独自の認証規則を実装したりしても良い(MAY)。
+サーバは、認証チェックを通過しなかったリクエストに対して適切な
+HTTP エラーコードか、
+オブジェクトの存在がプライベートなものと考えられる場合は 403 Forbidden
+エラーコードで失敗するべきである(SHOULD)。
+プライベートターゲットの存在を公開したくない発信元サーバは、
+代わりに 404 Not Found のステータスコードを返しても良い(MAY)。
         </p>
       </section>
 
       <section id="source-property">
+<!--
         <h2>The source property</h2>
+-->
+        <h2>source 属性</h2>
         <p>
+<!--
           In addition to all the properties defined by the
 	  [[!Activity-Vocabulary]], ActivityPub extends the <code>Object</code> by
 	  supplying the <code>source</code> property.
@@ -620,11 +921,27 @@
           editing by clients.
           In general, clients do the conversion from <code>source</code>
           to <code>content</code>, not the other way around.
+-->
+[[!Activity-Vocabulary]] で定義されている全ての属性に加えて、
+ActivityPub は <code>Object</code> に
+<code>source</code> 属性を提供するように拡張する。
+<code>source</code> 属性は
+is intended to convey some
+          sort of source from which the <code>content</code> markup
+          was derived, as a form of provenance, or to support future
+          editing by clients.
+一般的に、クライアントは <code>source</code> から
+<code>content</code> への変換を行い、逆は行わない。
         </p>
         <p>
+<!--
           The value of <code>source</code> is itself an object
           which uses its own <code>content</code> and <code>mediaType</code>
           fields to supply source information.
+-->
+<code>source</code> の値は、
+ソース情報を提供するために自身の <code>content</code> と <code>mediaType</code>
+フィールドを持つオブジェクトである。
         </p>
         <pre class="example">
           {
@@ -641,6 +958,7 @@
         <div class="note"
              title="What to do when clients can't meaningfully handle a mediaType?">
           <p>
+<!--
             In general, it's best to let a user edit their original post
             in the same source format they originally composed it in.
             But not all clients can reliably provide a nice interface for
@@ -655,6 +973,21 @@
             A client doing so should thus provide a minimally obtrusive warning
             cautioning that the original source format is not understood and is
             thus being ignored.
+-->
+一般的に、元々作成したのと同じソース形式でユーザーに元の投稿を編集させるのが
+最善である。
+しかし、全てのクライアントが全てのソース型に対するよいインターフェースを
+安定して提供できるわけではなく、
+クライアントは
+<code>source</code> から <code>content</code> への変換が行われることを
+想定するので、
+クライアントによっては、他のクライアントがどのように動作するかを知らない
+メディア型で動作するかもしれない。
+クライアントは編集するための <code>content</code> を都合良く提供して
+ソースを無視するかもしれないが、これはユーザーが将来の編集で元の
+<code>source</code> の望ましい形式を失うことを意味する。
+従って、そのようにするクライアントは最低限、元のソース形式が理解できないので
+無視することを注意するような目立つ形での警告を提供するべきである。
           </p>
           <p>
             For example, Alyssa P. Hacker likes to post to her ActivityPub
@@ -677,8 +1010,12 @@
     </section>
 
     <section id="actors">
+<!--
       <h2>Actors</h2>
+-->
+      <h2>actor</h2>
       <p>
+<!--
         ActivityPub actors are generally one of the
         <a href="https://www.w3.org/TR/activitystreams-vocabulary/#actor-types">
           ActivityStreams Actor Types</a>,
@@ -693,27 +1030,59 @@
         When entered directly into a user interface (for example on a login
         form), it is desirable to support simplified naming.
         For this purpose, ID normalization SHOULD be performed as follows:
+-->
+ActivityPub actor は一般的に
+        <a href="https://www.w3.org/TR/activitystreams-vocabulary/#actor-types">
+          ActivityStreams Actor Types</a> の一つであるが、
+それに制限されない。
+例えば、
+        <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-profile">
+          Profile</a> オブジェクトが
+actor として使われるかもしれないし、
+ActivityStreams 拡張からの型が使われるかもしれない。
+actor は ActivityPub の他の Object と同様に
+<a href="#retrieving-objects">取得</a> される。
+他の ActivityStreams オブジェクトと同様、actor は URI である
+<code>id</code> を持つ。
+(例えばログインフォームのような)ユーザーインターフェースから直接入力された
+場合、単純化した命名規則に対応しているのが望ましい。
+この目的のため、ID 正規化は以下のように行われるべきである(SHOULD):
       </p>
       <ol>
         <li>
+<!--
           If the entered ID is a valid URI, then it is to be used directly.
+-->
+入力された ID が有効な URI の場合、これが直接使われる。
         </li>
         <li>
+<!--
           If it appears that the user neglected to add a scheme for a URI that
           would otherwise be considered valid, such as
           <code>example.org/alice/</code>, clients MAY attempt to provide
           a default scheme, preferably <code>https</code>.
+-->
+ユーザーが URI にスキームを追加するのを怠ったがそれ以外は有効であるように
+見える場合、クライアントはデフォルトのスキーム (<code>https</code> が望ましい)
+を提供しようとしても良い(MAY)。
         </li>
         <li>
+<!--
           Otherwise, the entered value should be considered invalid.
+-->
+さもなければ、入力された値は不正として扱われるべきである。
         </li>
       </ol>
 
       <p>
+<!--
         Once the actor's URI has been identified, it should be dereferenced.
+-->
+一旦 actor の URI が識別されると、これは展開されるべきである。
       </p>
 
       <div class="note">
+<!--
         ActivityPub does not dictate a specific relationship between
         "users" and Actors; many configurations are possible.
         There may be multiple human users or organizations controlling an
@@ -724,56 +1093,112 @@
         are controlled by the same entity, or allowing one Actor to be presented
         through multiple alternate profiles or aspects, are at the discretion
         of the implementation.
+-->
+ActivityPub は「ユーザー」と Actor との間で特定の関係を決定しない;
+多くの設定が考えられる。
+ある Actor を複数の人間や組織が制御しているかもしれないし、
+一人の人間や組織が複数の Actor を制御しているかもしれない。
+同様に、ある Actor はボットや自動化プロセスのようなソフトウェアの
+一部を表現しているかもしれない。
+より詳細な「ユーザー」のモデリングとしては、
+for example linking together of Actors which
+        are controlled by the same entity, or allowing one Actor to be presented
+        through multiple alternate profiles or aspects, are at the discretion
+        of the implementation.
       </div>
 
       <section id="actor-objects">
+<!--
         <h2><i>Actor</i> objects</h2>
+-->
+        <h2><i>Actor</i> オブジェクト</h2>
         <p>
+<!--
           Actor objects MUST have, in addition to the properties mandated by
           <a href="#obj-id"></a>, the following properties:
+-->
+Actor オブジェクトは、<a href="#obj-id"></a> で強制される属性に加えて、
+以下の属性を持たなければならない(MUST):
         </p>
         <dl>
           <dt id="inbox-property">inbox</dt>
           <dd>
+<!--
             A reference to an [[!ActivityStreams]]
             <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
               <code>OrderedCollection</code></a>
             comprised of all the messages received by the actor; see
             <a href="#inbox"></a>.
+-->
+            この actor が受け取った全てのメッセージから成る
+            [[!ActivityStreams]]
+            <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+              <code>OrderedCollection</code></a>
+            への参照;
+            <a href="#inbox"></a> を参照のこと。
           </dd>
           <dt id="outbox-property">outbox</dt>
           <dd>
+<!--
             An [[!ActivityStreams]]
             <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
               <code>OrderedCollection</code></a>
             comprised of all the messages produced by the actor; see
             <a href="#outbox"></a>.
+-->
+            この actor によって作成された全てのメッセージから成る
+            [[!ActivityStreams]]
+            <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+              <code>OrderedCollection</code></a>
+            ;
+            <a href="#outbox"></a> を参照のこと。
           </dd>
         </dl>
         <p>
+<!--
           Implementations SHOULD, in addition, provide the following
           properties:
+-->
+実装は、これに加えて、以下の属性を提供するべきである(SHOULD):
         </p>
         <dl>
           <dt id="following-property">following</dt>
           <dd>
+<!--
             A link to an [[!ActivityStreams]] collection of the actors that
             this actor is following; see <a href="#following"></a>
+-->
+この actor がフォローしている actor を示す
+[[!ActivityStreams]] コレクションへのリンク;
+<a href="#following"></a> 参照。
           </dd>
           <dt id="followers-property">followers</dt>
           <dd>
+<!--
             A link to an [[!ActivityStreams]] collection of the actors that
             follow this actor; see <a href="#followers"></a>.
+-->
+この actor をフォローしている actor を示す
+[[!ActivityStreams]] コレクションへのリンク;
+<a href="#followers"></a> 参照。
           </dd>
         </dl>
         <p>
+<!--
           Implementations MAY provide the following properties:
+-->
+実装は以下の属性を提供しても良い(MAY):
         </p>
         <dl>
           <dt id="liked-property">liked</dt>
           <dd>
+<!--
             A link to an [[!ActivityStreams]] collection of objects this
             actor has liked; see <a href="#liked"></a>.
+-->
+この actor が好んでいるオブジェクトを示す
+[[!ActivityStreams]] コレクションへのリンク;
+<a href="#liked"></a> 参照。
           </dd>
         </dl>
         <pre class="example">
@@ -795,78 +1220,136 @@
   ]
 }
         </pre>
+<!--
         <p>Implementations MAY, in addition, provide the following properties:</p>
+-->
+        <p>実装は、これに加えて、以下の属性を提供しても良い(MAY):</p>
         <dl>
           <dt id="streams-property">streams</dt>
           <dd>
+<!--
             A list of supplementary Collections which may be of interest.
+-->
+関心のある補助的な Collection のリスト。
           </dd>
           <dt id="preferredUsername">preferredUsername</dt>
           <dd>
+<!--
             A short username which may be used to refer to the actor, with no
             uniqueness guarantees.
+-->
+actor を参照するために使われる短いユーザー名; ユニーク性は保証されない。
           </dd>
           <dt id="endpoints">endpoints</dt>
           <dd>
+<!--
             A json object which maps additional (typically server/domain-wide)
             endpoints which may be useful either for this actor or someone
             referencing this actor.
             This mapping may be nested inside the actor document as the value
             or may be a link to a JSON-LD document with these properties.
+-->
+この actor またはこの actor を参照する誰かにとって有用かもしれない
+(典型的にはサーバ/ドメイン単位の)
+追加のエンドポイントをマッピングした json オブジェクト。
+このマッピングは actor 文書の中で値としてネストしても良いし、
+これらの属性を持つ JSON-LD 文書へのリンクでも良い。
           </dd>
         </dl>
 
         <p>
+<!--
           The <code>endpoints</code> mapping MAY include the following
           properties:
+-->
+<code>endpoints</code> マッピングは以下の属性を含んでいても良い(MAY):
         </p>
         <dl>
           <dt id="proxyUrl">proxyUrl</dt>
           <dd>
+<!--
             Endpoint URI so this actor's clients may access remote
             ActivityStreams objects which require authentication to access.
             To use this endpoint, the client posts an
             <code>x-www-form-urlencoded</code> <code>id</code> parameter
             with the value being the <code>id</code> of the requested
             ActivityStreams object.
+-->
+actor のクライアントが、
+アクセスするのに認証が必要なリモート ActivityStreams にアクセスするのに
+使われる エンドポイント URI。
+このエンドポイントを使うには、クライアントは
+要求する ActivityStreams オブジェクトの <code>id</code> の値を持つ
+            <code>x-www-form-urlencoded</code> <code>id</code> 引数を
+投稿する。
           </dd>
           <dt id="oauthAuthorizationEndpoint">oauthAuthorizationEndpoint</dt>
           <dd>
+<!--
             If OAuth 2.0 bearer tokens [[RFC6749]] [[RFC6750]] are being used
             for authenticating
             <a href="#client-to-server-interactions">client to server
               interactions</a>,
             this endpoint specifies a URI at which a browser-authenticated user
             may obtain a new authorization grant.
+-->
+OAuth 2.0 bearer トークン [[RFC6749]] [[RFC6750]] が
+<a href="#client-to-server-interactions">クライアントからサーバへの通信</a> の
+認証として使われる場合、
+このエンドポイントは、ブラウザ認証ユーザーが新しい認証グラントを得るための
+URI を指定する。
           </dd>
           <dt id="oauthTokenEndpoint">oauthTokenEndpoint</dt>
           <dd>
+<!--
             If OAuth 2.0 bearer tokens [[RFC6749]] [[RFC6750]] are being used
             for authenticating
             <a href="#client-to-server-interactions">client to server
               interactions</a>,
             this endpoint specifies a URI at which a client may acquire an
 	    access token.
+-->
+OAuth 2.0 bearer tokens [[RFC6749]] [[RFC6750]] が
+<a href="#client-to-server-interactions">クライアントからサーバへの通信</a> の
+認証として使われる場合、
+このエンドポイントは、クライアントがアクセストークンを得るための
+URI を指定する。
           </dd>
           <dt id="provideClientKey">provideClientKey</dt>
           <dd>
+<!--
             If Linked Data Signatures and HTTP Signatures are being used for
             authentication and authorization, this endpoint specifies a URI at
             which browser-authenticated users may authorize a client's public
             key for
             <a href="#client-to-server-interactions">client to server
               interactions</a>.
+-->
+Linked Data Signatures と HTTP Signatures が認証と認可として使われている場合、
+このエンドポイントはブラウザ認証ユーザーが
+<a href="#client-to-server-interactions">クライアントからサーバへの通信</a> の
+ためのクライアントの公開鍵を認証する URI を指定する。
           </dd>
           <dt id="signClientKey">signClientKey</dt>
           <dd>
+<!--
             If Linked Data Signatures and HTTP Signatures are being used for
             authentication and authorization, this endpoint specifies a URI at
             which a client key may be signed by the actor's key for a time
             window to act on behalf of the actor in interacting with foreign
             servers.
+-->
+Linked Data Signatures と HTTP Signatures が認証と認可として使われている場合、
+このエンドポイントは specifies a URI
+at which
+a client key may be signed by the actor's key
+for a time window to act
+on behalf of the actor
+in interacting with foreign servers.
           </dd>
           <dt id="sharedInbox">sharedInbox</dt>
           <dd>
+<!--
             An optional endpoint
             <a href="#shared-inbox-delivery">
               used for wide delivery of publicly addressed activities
@@ -878,59 +1361,112 @@
             Reading from the <code>sharedInbox</code> endpoint MUST NOT present
             objects which are not addressed to the <code>Public</code>
             endpoint.
+-->
+            <a href="#shared-inbox-delivery">パブリックに宛先指定された
+アクティビティとフォロワーによって送られたアクティビティを
+広く配布するために使われる</a>
+オプションのエンドポイント。
+            <code>publicInbox</code> エンドポイントは、
+パブリックに読み込み可能な、
+<a href="#public-addressing">Public</a> 特殊コレクションを示す
+オブジェクトを含む
+<code>OrderedCollection</code> オブジェクトであるべきである(SHOULD)。
+<code>sharedInbox</code> エンドポイントからの読み込みは、
+<code>Public</code> エンドポイントにアドレス指定されていないオブジェクトを
+表現してはならない(MUST NOT)。
           </dd>
         </dl>
 
         <div class="note" id="as2-actor-properties">
           <p>
+<!--
             As the upstream vocabulary for ActivityPub, any applicable
             [[!ActivityStreams]] property may be used on ActivityPub Actors.
             Some ActivityStreams properties are particularly worth highlighting
             to demonstrate how they are used in ActivityPub implementations.
+-->
+ActivityPub のための上流語彙として、
+任意の適用可能な [[!ActivityStreams]] 属性は ActivityPub Actor として使われる。
+一部の ActivityStreams 属性は特に注目する価値がある;
+これが ActivityPub 実装でどう使われるかを例示する。
           </p>
 
           <dl>
             <dt id="url-property">url</dt>
             <dd>
+<!--
               A link to the actor's "profile web page", if not equal to the
               value of <code>id</code>.
+-->
+actor の「プロフィール web ページ」へのリンク
+(これが <code>id</code> の値と同じではない場合)。
             </dd>
             <dt id="name-property">name</dt>
             <dd>
+<!--
               The preferred "nickname" or "display name" of the actor.
+-->
+actor の、望ましい「ニックネーム」や「表示名」。
             </dd>
             <dt id="summary-property">summary</dt>
+<!--
             <dd>A quick summary or bio by the user about themselves.</dd>
+-->
+            <dd>ユーザー自身の簡単な要約や経歴</dd>
             <dt id="icon-property">icon</dt>
             <dd>
+<!--
               A link to an image or an Image object which represents the user's
               profile picture (this may be a thumbnail).
+-->
+ユーザーのプロフィール画像を表現する、画像へのリンクまたは Image オブジェクト
+(これはサムネイルかもしれない)。
             </dd>
           </dl>
         </div>
         <p class="note" id="actor-text-direction">
+<!--
           Properties containing natural language values,
           such as <code>name</code>, <code>preferredUsername</code>, or
           <code>summary</code>, make use of
+-->
+<code>name</code>, <code>preferredUsername</code>, <code>summary</code> の
+ような、自然言語値を含む属性は、
+<!--
           <a href="https://www.w3.org/TR/activitystreams-core/#naturalLanguageValues">
             natural language support defined in ActivityStreams</a>.
+-->
+          <a href="https://www.w3.org/TR/activitystreams-core/#naturalLanguageValues">
+            natural language support defined in ActivityStreams</a> を使う。
         </p>
       </section>
 
     </section>
 
     <section id="collections">
+<!--
       <h2>Collections</h2>
+-->
+      <h2>コレクション</h2>
       <p>
+<!--
         [[!ActivityStreams]] defines the collection concept; ActivityPub
         defines several collections with special behavior.
         Note that ActivityPub makes use of
         <a href="https://www.w3.org/TR/activitystreams-core/#paging">
           ActivityStreams paging</a>
         to traverse large sets of objects.
+-->
+[[!ActivityStreams]] はコレクションの概念を定義している;
+ActivityPub は特殊な振る舞いをするコレクションをいくつか定義する。
+ActivityPub は大きなオブジェクトの集合を辿るために
+        <a href="https://www.w3.org/TR/activitystreams-core/#paging">
+          ActivityStreams paging</a>
+を使うことに注意すること。
       </p>
 
       <p>
+<!--
         Note that some of these collections are specified to be of type
         <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
           <code>OrderedCollection</code></a>
@@ -944,9 +1480,24 @@
         <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
           <code>OrderedCollection</code></a>
         MUST be presented consistently in reverse chronological order.
+-->
+これらのコレクションの一部は特に
+        <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+          <code>OrderedCollection</code></a>
+型を指定しており、一方その他は
+        <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-collection">
+          <code>Collection</code></a>
+または
+        <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+          <code>OrderedCollection</code></a>
+の両方を許していることに注意すること。
+        <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+          <code>OrderedCollection</code></a>
+は一貫して逆時系列順で表現されなければならない(MUST)。
       </p>
 
       <p class="note">
+<!--
         What property is used to determine the reverse chronological order
         is intentionally left as an implementation detail.
         For example, many SQL-style databases use an incrementing integer
@@ -957,18 +1508,36 @@
         remain intact, with newer items first.
         A property which changes regularly, such a "last updated" timestamp,
         should not be used.
+-->
+逆時系列順を決定するのにどの属性が使われるかは、意図的に実装詳細として
+残してある。
+例えば、多くの SQL スタイルのデータベースは識別子としてインクリメントする
+整数を使う; これはほとんどの場合挿入順として合理的に使われる。
+その他のデータベースでは、挿入時刻タイムスタンプが好まれるかもしれない。
+何が使われるかは重要ではないが、新しいアイテムが最初になるような形で
+要素の順序が保持されていなければならない。
+「最終更新」タイムスタンプのような定期的に変更される属性は
+使われるべきではない。
       </p>
 
       <section id="outbox">
         <h2>Outbox</h2>
         <p>
+<!--
           The outbox is discovered through the <code>outbox</code>
           property of an <a href="#actors">actor's</a> profile.
           The <code>outbox</code> MUST be an
           <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
             <code>OrderedCollection</code></a>.
+-->
+outbox は <a href="#actors">actor</a> のプロファイルの
+<code>outbox</code> プロパティを使って発見される。
+<code>outbox</code> は
+<a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+            <code>OrderedCollection</code></a>でなければならない(MUST)。
         </p>
         <p>
+<!--
           The outbox stream contains activities the user has
           published, subject to the ability of the requestor to retrieve the
           activity (that is, the contents of the outbox are filtered by the
@@ -980,11 +1549,28 @@
           This could potentially be all relevant objects published by the
           user, though the number of available items is left to the
           discretion of those implementing and deploying the server.
+-->
+outboxストリームは、要求者がアクティビティを取得する能力があるという前提で、
+ユーザーが発行したアクティビティを含む
+(つまり、outbox の内容はそれを読む人の権限によってフィルタされる)。
+ユーザーが
+          <a href="#authorization">Authorization</a>
+なしでリクエストを投稿した場合、
+サーバは全ての <a href="#public-addressing">Public</a> 投稿を
+応答するべきである。
+これは場合によってはそのユーザーによって発行された、全ての関連する
+オブジェクトとなるかもしれないが、
+利用可能なアイテムの数はサーバの実装とデプロイの自由裁量に任されている。
         </p>
         <p>
+<!--
           The outbox accepts HTTP POST requests, with behaviour described in
           <a href="#client-to-server-interactions">Client to Server
             Interactions</a>.
+-->
+outbox は HTTP POST リクエストを受け付ける; その振る舞いは
+<a href="#client-to-server-interactions">クライアントからサーバへの通信</a>に
+記述されている。
         </p>
       </section>
 
@@ -992,14 +1578,22 @@
         <h2>Inbox</h2>
 
         <p>
+<!--
           The inbox is discovered through the <code>inbox</code>
           property of an <a href="#actors">actor's</a> profile.
           The <code>inbox</code> MUST be an
           <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
             <code>OrderedCollection</code></a>.
+-->
+inbox は <a href="#actors">actor</a> のプロファイルの
+<code>inbox</code> プロパティを使って発見される。
+<code>inbox</code> は
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+            <code>OrderedCollection</code></a> でなければならない(MUST)。
         </p>
 
         <p>
+<!--
           The inbox stream contains all activities received by the
           actor.
           The server SHOULD filter content according to the requester's
@@ -1009,9 +1603,17 @@
           other content may be public, whereas other content may require
           authentication for non-owner users, if they can access the inbox
           at all.
+-->
+inbox ストリームは actor が受信した全てのアクティビティを含む。
+サーバは要求者の権限に応じてコンテンツをフィルタリングするべきである(SHOULD)。
+一般的に、inbox の所有者は その inbox のコンテンツ全てにアクセスできる。
+inbox にアクセスできる場合でも、アクセス制御に依存して、その他のコンテンツの
+一部はパブリックで、一方その他のコンテンツは非所有者のユーザーは認証を
+要求されるかもしれない。
         </p>
 
         <p>
+<!--
           The server MUST perform de-duplication of activities returned by
           the inbox. Duplication can occur if an activity is addressed both
           to an actor's followers, and a specific
@@ -1020,19 +1622,38 @@
           Such deduplication MUST be performed by comparing the
           <code>id</code> of the activities and dropping any activities
           already seen.
+-->
+サーバは inbox に返されたアクティビティの重複解消を
+実行しなければならない(MUST)。
+Duplication can occur if an activity is addressed both
+          to an actor's followers, and a specific
+          actor who also follows the recipient actor, and the server has failed
+          to de-duplicate the recipients list.
+このような重複解消は、アクティビティの <code>id</code> を比較して、
+既に読んだアクティビティを落とす形で行われなければならない(MUST)。
         </p>
 
         <p>
+<!--
           The inboxes of actors on federated servers accepts HTTP POST requests,
           with behaviour described in <a href="#delivery">Delivery</a>.
           Non-federated servers SHOULD return a 405 Method Not Allowed upon
           receipt of a POST request.
+-->
+連合サーバ上の actor の inbox は HTTP POST リクエストを受け付ける; その振る舞いは
+<a href="#delivery">Delivery</a> に記述されている。
+非連合サーバは POST リクエストを受け取った場合は 405 Method Not Allowed を
+返すべきである(SHOULD)。
         </p>
       </section>
 
       <section id="followers">
+<!--
         <h2>Followers Collection</h2>
+-->
+        <h2>Followers コレクション</h2>
         <p>
+<!--
           Every <a href="#actors">actor</a> SHOULD have a <code>followers</code>
           collection.
           This is a list of everyone who has sent a
@@ -1049,18 +1670,46 @@
             <code>Collection</code></a>
           and MAY be filtered on privileges of an authenticated user
           or as appropriate when no authentication is given.
+-->
+各 <a href="#actors">actor</a> は <code>followers</code> コレクションを
+持つべきである(SHOULD)。
+これはこの actor に
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-follow">Follow</a>
+アクティビティを送信したときに
+          <a href="#follow-activity-outbox">副作用</a> として追加された送信者の一覧である。
+これは誰かがある actor をフォローしている全てのユーザーの一覧を
+見つける場所である。
+<code>followers</code> コレクションは
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+            <code>OrderedCollection</code></a>
+または
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-collection">
+            <code>Collection</code></a>
+でなければならず(MUST)、
+認証されたユーザーの権限や、認証がない場合は適切な形でフィルタリングしても
+良い(MAY)。
         </p>
 
         <p class="note" title="Default for notification targeting">
+<!--
           The follow activity generally is a request to see the objects an actor
           creates. This makes the Followers collection an appropriate default
           target for <a href="#delivery">delivery</a> of notifications.
+-->
+follow アクティビティは一般的には、ある actor が作成したオブジェクトを
+見るための要求である。
+これにより、Followers コレクションは通知の <a href="#delivery">配送</a> の
+適切なデフォルトターゲットになる。
         </p>
       </section>
 
       <section id="following">
+<!--
         <h2>Following Collection</h2>
+-->
+        <h2>Following コレクション</h2>
         <p>
+<!--
           Every actor SHOULD have a <code>following</code> collection.
           This is a list of everybody that the actor has followed, added as a
           <a href="#follow-activity-outbox">side effect</a>.
@@ -1072,12 +1721,29 @@
             <code>Collection</code></a>
           and MAY be filtered on privileges of an authenticated user
           or as appropriate when no authentication is given.
+-->
+各 actor は <code>following</code> コレクションを持つべきである(SHOULD)。
+これは <a href="#follow-activity-outbox">副作用</a> として追加された、
+この actor がフォローした相手の一覧である。
+<code>following</code> コレクションは
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+            <code>OrderedCollection</code></a>
+または
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-collection">
+            <code>Collection</code></a>
+でなければならず(MUST)、
+認証されたユーザーの権限や、認証がない場合は適切な形でフィルタリングしても
+良い(MAY)。
         </p>
       </section>
 
       <section id="liked">
+<!--
         <h2>Liked Collection</h2>
+-->
+        <h2>Liked コレクション</h2>
         <p>
+<!--
           Every actor MAY have a <code>liked</code> collection.
           This is a list of every object from all of the actor's <code>Like</code>
           activities, added as a <a href="#like-activity-outbox">side effect</a>.
@@ -1089,17 +1755,40 @@
             <code>Collection</code></a>
           and MAY be filtered on privileges of an authenticated user
           or as appropriate when no authentication is given.
+-->
+各 actor は <code>liked</code> コレクションを持っても良い(MAY)。
+これは <a href="#like-activity-outbox">副作用</a> として追加された、
+この actor の全ての <code>Like</code> のオブジェクトの一覧である。
+<code>liked</code> コレクションは
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+            <code>OrderedCollection</code></a>
+または
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-collection">
+            <code>Collection</code></a>
+でなければならず(MUST)、
+認証されたユーザーの権限や、認証がない場合は適切な形でフィルタリングしても
+良い(MAY)。
         </p>
       </section>
 
       <section id="public-addressing">
+<!--
         <h2>Public Addressing</h2>
+-->
+        <h2>Public アドレス指定</h2>
         <p>
+<!--
           In addition to [[!ActivityStreams]] collections and objects,
           Activities may additionally be addressed to the special "public"
           collection, with the identifier
           <code>https://www.w3.org/ns/activitystreams#Public</code>.
           For example:
+-->
+          [[!ActivityStreams]] コレクションとオブジェクトに加えて、
+          activity は追加で特殊な "public" コレクションを宛先に指定できる;
+          これは識別子
+          <code>https://www.w3.org/ns/activitystreams#Public</code> である。
+          例:
         </p>
         <pre class="example">
           {
@@ -1109,6 +1798,7 @@
           }
         </pre>
         <p>
+<!--
           Activities addressed to this special URI shall be accessible to all
           users, without authentication.
           Implementations MUST NOT deliver to the "public" special collection;
@@ -1118,9 +1808,20 @@
           endpoint which is available for efficient shared delivery of public
           posts (as well as posts to followers-only); see
           <a href="#shared-inbox-delivery"></a>.
+-->
+          この特殊な URI を宛先に指定された activity は全てのユーザーから
+          認証なしにアクセスできる。
+          実装者は "public" 特殊コレクションへ配送してはならない(MUST NOT);
+          これは実際の activity を受信する能力を持たない。
+          しかし、
+actor はパブリックな投稿の効率的な共有配送のために利用可能である
+          <a href="#sharedInbox"><code>sharedInbox</code></a> エンドポイントを
+          持ってもよい(MAY);
+          <a href="#shared-inbox-delivery"></a> を参照のこと。
         </p>
         <div class="note">
           <p>
+<!--
             Compacting an ActivityStreams object using the ActivityStreams
             JSON-LD context might result in
             <code>https://www.w3.org/ns/activitystreams#Public</code>
@@ -1130,13 +1831,28 @@
             JSON rather than converting an incoming activity over to a
             local context using JSON-LD tooling should be aware of this
             and should be prepared to accept all three representations.
+-->
+ActivityStreams JSON-LD コンテキストを使って
+ActivityStreams オブジェクトを短縮化すると、
+<code>https://www.w3.org/ns/activitystreams#Public</code> は、
+それぞれPublic コレクションの正当な表現である、
+単に <code>Public</code> および <code>as:Public</code> と
+表現できることに注意すること。
+ActivityStreams に関して、
+受信したアクティビティを JSON-LD ツールを使ってローカルなコンテキストに
+変換するのではなく、単に JSON として扱う実装はこれに注意するべきで、
+3 種類全ての表現を受け付けるように準備するべきである。
           </p>
         </div>
       </section>
 
       <section id="likes">
+<!--
         <h2>Likes Collection</h2>
+-->
+        <h2>Likes コレクション</h2>
         <p>
+<!--
           Every object MAY have a <code>likes</code> collection.
           This is a list of all <code>Like</code> activities with this object
           as the <code>object</code> property, added as a
@@ -1149,44 +1865,83 @@
             <code>Collection</code></a>
           and MAY be filtered on privileges of an authenticated user
           or as appropriate when no authentication is given.
+-->
+各オブジェクトは <code>likes</code> コレクションを持ってもよい(MAY)。
+
+これは <a href="#like-activity-inbox">副作用</a> として追加された、
+このオブジェクトを <code>object</code> 属性として持つ全ての
+<code>Like</code> アクティビティの一覧である。
+<code>likes</code> コレクションは
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+            <code>OrderedCollection</code></a>
+または
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-collection">
+            <code>Collection</code></a>
+でなければならず(MUST)、
+認証されたユーザーの権限や、認証がない場合は適切な形でフィルタリングしても
+良い(MAY)。
         </p>
 
         <div class="note">
           <p>
+<!--
             Care should be taken to not confuse the the
             <a href="#likes"><code>likes</code></a>
             collection with the similarly named but different
             <a href="#liked"><code>liked</code></a> collection.
             In sum:
+-->
+コレクションを、似たような名前であるけれども異なる
+            <a href="#liked"><code>liked</code></a> コレクションと
+混同しないように注意すること。
+まとめると:
           </p>
 
           <ul>
             <li>
               <b>liked:</b>
+<!--
               Specifically a property of actors.
               This is a collection of <code>Like</code> activities performed
               <i>by the actor</i>,
               added to the collection as a
               <a href="#like-activity-outbox">
                 side effect of delivery to the outbox</a>.
+-->
+明確に actor の属性。
+これは <i>このアクターによって</i> 行われた <code>Like</code>
+アクティビティのコレクションで、
+<a href="#like-activity-outbox">outbox への配送の副作用</a> として
+コレクションに追加される。
             </li>
 
             <li>
               <b>likes:</b>
+<!--
               May be a property of any object.
               This is a collection of <code>Like</code> activities referencing
               this object,
               added to the collection as a
               <a href="#like-activity-inbox">
                 side effect of delivery to the inbox</a>.
+-->
+あらゆるオブジェクトの属性となり得る。
+これはこのオブジェクトを参照している <code>Like</code> アクティビティの
+コレクションで、
+<a href="#like-activity-inbox">inbox への配達の副作用</a> として
+コレクションに追加される。
             </li>
           </ul>
         </div>
       </section>
 
       <section id="shares">
+<!--
         <h2>Shares Collection</h2>
+-->
+        <h2>Shares コレクション</h2>
         <p>
+<!--
           Every object MAY have a <code>shares</code> collection.
           This is a list of all <code>Announce</code> activities with this object
           as the <code>object</code> property, added as a
@@ -1199,18 +1954,40 @@
             <code>Collection</code></a>
           and MAY be filtered on privileges of an authenticated user
           or as appropriate when no authentication is given.
+-->
+各オブジェクトは <code>shares</code> コレクションを持っても良い(MAY)。
+これは、このオブジェクトを <code>object</code> 属性に含む全ての
+<code>Announce</code> アクティビティの一覧で、
+<a href="#announce-activity-inbox">副作用</a> として追加されたものである。
+<code>shares</code> コレクションは
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollection">
+            <code>OrderedCollection</code></a>
+または
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#dfn-collection">
+            <code>Collection</code></a>
+でなければならず(MUST)、
+認証ユーザーの権限によってや、認証が与えられなかったときに適切になるように、
+フィルタリングしても良い(MAY)。
         </p>
       </section>
     </section>
 
     <section id="client-to-server-interactions">
+<!--
       <h2>Client to Server Interactions</h2>
+-->
+      <h2>クライアントからサーバへの通信</h2>
       <p>
+<!--
         Activities as defined by [[!ActivityStreams]] are the core mechanism
         for creating, modifying and sharing content within the social graph.
+-->
+[[!ActivityStreams]] で定義された Activity は、ソーシャルグラフ内で
+コンテンツを作成、変更、共有するための中心となる機構である。
       </p>
 
       <p>
+<!--
         Client to server interaction takes place through clients posting
         Activities to an actor's <a href="#outbox">outbox</a>.
         To do this, clients MUST discover the URL of the actor's outbox from
@@ -1228,6 +2005,25 @@
         object which
         <a href="#object-without-create">will be wrapped in a Create activity
           by the server</a>.
+-->
+クライアントからサーバへの通信は、クライアントが
+actor の <a href="#outbox">outbox</a> に Activitity 投稿することで行われる。
+これを行うために、クライアントは actor の
+<a href="#actor-objects">profile</a> からその outbox の URL を
+発見しなければならず(MUST)、
+それから、Content-Type に
+  <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
+を指定した <code>POST</code> リクエストをこの URL に行わなければならない(MUST)。
+        Servers MAY interpret a Content-Type or Accept header of
+        <code>application/activity+json</code> as equivalent
+        to <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
+        for client-to-server interactions.
+このリクエストは、outbox を所有するユーザーの認証情報で
+認証されなければならない(MUST)。
+<code>POST</code> リクエストのボディは、単一の Activity
+(組み込みオブジェクトを含んでいても良い(MAY))、あるいは
+<a href="#object-without-create">サーバによって Create アクティビティにラッピングされる</a>
+単一の非 Activity オブジェクトのどちらかを含んでいなければならない(MUST)。
       </p>
       <pre class="example" title="Submitting an Activity to the Outbox">
 POST /outbox/ HTTP/1.1
@@ -1250,12 +2046,21 @@ Content-Type: application/ld+json; profile="https://www.w3.org/ns/activitystream
       </pre>
 
       <p>
+<!--
         If an Activity is submitted with a value in the <code>id</code>
         property, servers MUST ignore this and generate a new <code>id</code>
         for the Activity.
         Servers MUST return a <code>201 Created</code> HTTP code, and unless
         the activity is transient, MUST include the new <code>id</code> in the
         <code>Location</code> header.
+-->
+        <code>id</code> 属性付きの Activity が投稿されたとき、
+        サーバはこれを無視してこの Activity のための新しい <code>id</code> を
+        生成しなければならない(MUST)。
+        サーバは <code>201 Created</code> HTTP コードを返さなければならず(MUST)、
+        Activity が一時的なものでない限り、
+        <code>Location</code> ヘッダに新しい <code>id</code> を
+        含めなければならない(MUST)。
       </p>
       <pre class="example" title="Outbox response to submitted Activity">
 HTTP/1.1 201 Created
@@ -1263,14 +2068,21 @@ Location: https://dustycloud.org/likes/345
       </pre>
 
       <p id="remove-bto-bcc-before-delivery">
+<!--
         The server MUST remove the <code>bto</code> and/or <code>bcc</code>
         properties, if they exist, from the ActivityStreams object before
         delivery, but MUST utilize the addressing originally stored
         on the <code>bto</code> / <code>bcc</code> properties for determining
         recipients in <a href="#delivery">delivery</a>.
+-->
+ActivityStreams オブジェクトに <code>bto</code> や <code>bcc</code> 属性がある
+場合、サーバは配送の前にこれらを削除しなければならない(MUST)が、
+もともと <code>bto</code> / <code>bcc</code> 属性に保管されていた宛先を
+<a href="#delivery">delivery</a> での宛先を決定するのに使用しなければならない(MUST)。
       </p>
 
       <p>
+<!--
         The server MUST then add this new Activity to the
         <a href="#outbox">outbox</a> collection.
         Depending on the type of Activity, servers may then be required to
@@ -1279,23 +2091,43 @@ Location: https://dustycloud.org/likes/345
         the outbox.
         The Activity might appear after a delay or disappear at any period).
         These are described per individual Activity below.
+-->
+それからサーバは新しい Activity を <a href="#outbox">outbox</a> コレクションに
+追加しなければならない(MUST)。
+Activity の型に依存して、サーバはさらなる副作用を実行することが要求される。
+(しかし、Activity が outbox に現れる時刻には保証されない。
+Activity は遅延して現れたり、任意の時点で消滅したりするかもしれない。)
+これらは後述する個々の Activity に記述されている。
       </p>
 
       <p>
+<!--
         Attempts to submit objects to servers not implementing client to server
         support SHOULD result in a <code>405 Method Not Allowed</code> response.
+-->
+クライアントからサーバで実装されていないサーバにオブジェクトを投稿しようとした
+場合、<code>405 Method Not Allowed</code> レスポンスを返すべきである(SHOULD)。
       </p>
 
 
       <p>
+<!--
         HTTP caching mechanisms [[!RFC7234]] SHOULD be respected when
         appropriate, both in clients receiving responses from servers as well
         as servers sending responses to clients.
+-->
+HTTP キャッシュ機構 [[!RFC7234]] は、
+クライアントがサーバから応答を受信する場合とサーバがクライアントに
+応答を送信する場合の両方において、適切な場合には遵守するべきである(SHOULD)。
       </p>
 
       <section id="client-addressing">
+<!--
         <h3>Client Addressing</h3>
+-->
+        <h3>クライアントアドレス指定</h3>
           <p>
+<!--
           <strong>Clients</strong> are responsible for addressing new Activities
           appropriately.
           To some extent, this is dependent upon the particular client
@@ -1303,13 +2135,27 @@ Location: https://dustycloud.org/likes/345
           forward new Activities to addressees in the <code>to</code>,
           <code>bto</code>, <code>cc</code>, <code>bcc</code>, and
           <code>audience</code> fields.
+-->
+<strong>クライアント</strong> は、
+新しい Activity を適切にアドレス指定することに責任を持つ。
+          To some extent, this is dependent upon the particular client
+          implementation, but clients must be aware that the server will only
+          forward new Activities to addressees in the <code>to</code>,
+          <code>bto</code>, <code>cc</code>, <code>bcc</code>, and
+          <code>audience</code> fields.
         </p>
         <p>
+<!--
           The <a href="#followers">Followers Collection</a> and/or the
           <a href="#public-addressing">Public Collection</a> are good
           choices for the default addressing of new Activities.
+-->
+        <a href="#followers">Followers Collection</a> と
+        <a href="#public-addressing">Public Collection</a> は、
+        新しい Activity のデフォルトの宛先として良い選択肢である。
         </p>
         <p>
+<!--
           Clients SHOULD look at any objects attached to the new Activity via the
           <code>object</code>, <code>target</code>, <code>inReplyTo</code> and/or
           <code>tag</code> fields, retrieve <em>their</em> <code>actor</code> or
@@ -1320,13 +2166,36 @@ Location: https://dustycloud.org/likes/345
           set a limit for this recursion.
           (Note that this does not suggest that the client should "unpack"
           collections of actors being addressed as individual recipients).
+-->
+Clients SHOULD look at any objects attached to the new Activity
+via the
+<code>object</code>,
+<code>target</code>,
+<code>inReplyTo</code>
+and/or
+<code>tag</code> fields,
+retrieve
+<em>their</em> <code>actor</code> or <code>attributedTo</code> properties,
+また、そのアドレス指定属性を取得して、
+作成された新しい Activity の
+<code>to</code> または <code>cc</code> フィールドに追加してもよい(MAY)。
+クライアントは添付されたオブジェクトを再帰しても良い(MAY)が、
+そうする場合はこの再帰に制限を設定するべきである(SHOULD)
+(これは、クライアントがアドレス指定されたactorのコレクションを個々の宛先として
+「展開」することを提案しているのではないことに注意すること)。
         </p>
         <p>
+<!--
           Clients MAY give the user the chance to amend this addressing in the
           UI.
+-->
+クライアントは UI でユーザーに宛先を変更する機会を与えても良い(MAY)。
         </p>
         <p>
+<!--
           For example, when Chris likes the following article by Amy:
+-->
+例えば、Chris が Amy による次の記事に「いいね」をするとき:
         </p>
 
         <pre class="example" title="An Article">
@@ -1343,7 +2212,10 @@ Location: https://dustycloud.org/likes/345
   }
         </pre>
 
+<!--
         <p>the like is generated by the client as:</p>
+-->
+        <p>クライアントによって生成される「いいね」は:</p>
 
         <pre class="example" title="A Like of the Article">
   {
@@ -1365,6 +2237,7 @@ Location: https://dustycloud.org/likes/345
         followers and Evan, both of whom received the original article.</p>
 
         <p>
+<!--
           Clients submitting the following activities to an <code>outbox</code>
           MUST provide the <code>object</code> property in the activity:
           <code>Create</code>, <code>Update</code>, <code>Delete</code>,
@@ -1373,6 +2246,15 @@ Location: https://dustycloud.org/likes/345
           Additionally, clients submitting the following activities to an outbox
           MUST also provide the <code>target</code> property:
           <code>Add</code>, <code>Remove</code>.
+-->
+以下のアクティビティを <code>outbox</code> に投稿するクライアントは、
+アクティビティに <code>object</code> 属性も提供しなければならない(MUST):
+        <code>Create</code>, <code>Update</code>, <code>Delete</code>,
+        <code>Follow</code>, <code>Add</code>, <code>Remove</code>,
+        <code>Like</code>, <code>Block</code>, <code>Undo</code>.
+さらに、以下のアクティビティを outbox へ投稿するクライアントは、
+<code>target</code> 属性も提供しなければならない(MUST):
+        <code>Add</code>, <code>Remove</code>.
         </p>
 
       </section>
@@ -1381,51 +2263,98 @@ Location: https://dustycloud.org/likes/345
       <section id="create-activity-outbox">
         <h3>Create Activity</h3>
         <p>
+<!--
           The <code>Create</code> activity is used when posting a new object.
           This has the side effect that the object embedded within the Activity
           (in the <code>object</code> property) is created.
+-->
+<code>Create</code> アクティビティは新しいオブジェクトを投稿するときに使われる。
+これは、Activity の中に(<code>object</code> 属性として)埋め込まれている
+オブジェクトが作成されるという副作用がある。
         </p>
         <p>
+<!--
           When a <code>Create</code> activity is posted, the <code>actor</code>
           of the activity SHOULD be copied onto the <code>object</code>'s
           <code>attributedTo</code> field.
+-->
+<code>Create</code> アクティビティが投稿されたとき、アクティビティの
+<code>actor</code> は <code>object</code> の
+<code>attributedTo</code> フィールドにコピーされるべきである(SHOULD)。
         </p>
         <p>
+<!--
           A mismatch between addressing of the Create activity and its
           <code>object</code> is likely to lead to confusion.
           As such, a server SHOULD copy any recipients of the Create activity
           to its <code>object</code> upon initial distribution, and likewise
           with copying recipients from the <code>object</code> to the wrapping
           Create activity.
+-->
+Create アクティビティのアドレス指定とその <code>object</code> の
+不一致はおそらく混乱を引き起こす。
+従って、サーバは
+SHOULD copy any recipients of the Create activity
+          to its <code>object</code> upon initial distribution, and
+同様に <code>object</code> から外側の Create アクティビティに
+コピーするべきである(SHOULD)。
+<!--
           Note that it is acceptable for the <code>object</code>'s addressing
           to be changed later without changing the <code>Create</code>'s
           addressing (for example via an <code>Update</code> activity).
+-->
+<code>Create</code> のアドレス指定を変更することなく
+(例えば <code>Update</code> アクティビティで)
+<code>object</code> のアドレス指定を変更することは
+受け入れられることに注意すること。
         </p>
 
         <section id="object-without-create">
         <h4>Object creation without a Create Activity</h4>
         <p>
+<!--
           For client to server posting, it is possible to submit an object for
           creation without a surrounding activity.
+-->
+クライアントからサーバへの投稿で、
+周りのアクティビティなしでオブジェクトを作成することも可能である。
           The server MUST accept a valid [[!ActivityStreams]] object that
           isn't a subtype of <code>Activity</code> in the POST request to the
           outbox.
+<!--
           The server then MUST attach this object as the <code>object</code>
           of a <a href="#create-activity-outbox">Create Activity</a>.
           For non-transient objects, the server MUST attach an
           <code>id</code> to both the wrapping <code>Create</code> and its
           wrapped <code>Object</code>.
+-->
+サーバはこのオブジェクトを
+<a href="#create-activity-outbox">Create Activity</a> の
+<code>object</code> として添付しなければならない(MUST)。
+非一時的オブジェクトに関しては、
+サーバはラッピングした <code>Create</code> とラップされた
+<code>Object</code> に対して、<code>id</code> を
+添付しなければならない(MUST)。
         </p>
 
         <p class="note">
+<!--
           The <code>Location</code> value returned by the server should be the URL of
           the new Create activity (rather than the object).
+-->
+サーバから返された <code>Location</code> の値は、
+新しい(オブジェクトではなく) Create アクティビティの URL であるべきである。
         </p>
 
         <p>
+<!--
           Any <code>to</code>, <code>bto</code>, <code>cc</code>, <code>bcc</code>,
           and <code>audience</code> properties specified on the object MUST be
           copied over to the new Create activity by the server.
+-->
+オブジェクトで指定されている <code>to</code>, <code>bto</code>, <code>cc</code>, <code>bcc</code>,
+<code>audience</code> 属性は、
+サーバによって新しい Create アクティビティにコピーされなければならない(MUST)。
         </p>
 
         <pre class="example" title="Object with audience targeting">
@@ -1440,7 +2369,10 @@ Location: https://dustycloud.org/likes/345
         }
         </pre>
 
+<!--
         The above example could be converted to this:
+-->
+前述の例は以下のように変換される:
         <pre class="example" title="Create Activity wrapper generated by the server">
         {
           "@context": "https://www.w3.org/ns/activitystreams",
@@ -1468,17 +2400,25 @@ Location: https://dustycloud.org/likes/345
       <section id="update-activity-outbox">
         <h3>Update Activity</h3>
         <p>
+<!--
           The <code>Update</code> activity is used when updating an already
           existing object.
           The side effect of this is that the <code>object</code> MUST be
           modified to reflect the new structure as defined in the update
           activity, assuming the actor has permission to update this
           object.
+-->
+<code>Update</code> アクティビティは、既に存在するオブジェクトを更新するときに
+使われる。
+これの副作用として、actor がこのオブジェクトを更新する権限を持っている場合、
+<code>object</code> は Update アクティビティで定義されている新しい構造を
+反映した形で修正されなければならない(MUST)。
         </p>
 
         <section id="partial-updates">
           <h4>Partial Updates</h4>
           <p>
+<!--
             For client to server interactions, updates are partial;
             rather than updating the document all at once, any key value
             pair supplied is used to replace the existing value with
@@ -1488,8 +2428,17 @@ Location: https://dustycloud.org/likes/345
             A special exception is for when the value is the json
             <code>null</code> type; this means that this field should be
             removed from the server's representation of the object.
+-->
+クライアントからサーバへの通信では、更新は部分的である;
+文書全体を一度に更新するのではなく、指定された任意のキー/値の組が
+既存の値を新しい値に置き換えるために使われる。
+これは更新されるオブジェクトの最上位のフィールドにのみ適用される。
+特別な例外は、値が json の <code>null</code> 型の場合である;
+これは、このフィールドはサーバのオブジェクト表現から
+削除されるべきと言うことを意味する。
           </p>
           <p>
+<!--
             Note that this behavior is for client to server interaction where
             the client is posting to the server only.
             Server to server interaction and updates from the server to the client
@@ -1499,25 +2448,51 @@ Location: https://dustycloud.org/likes/345
             <a href="#update-activity-inbox">Update activity for server to server
               interactions</a>
             for more details.
+-->
+この振る舞いは、クライアントがサーバに投稿したときのクライアントからサーバへの
+通信のみであることに注意すること。
+サーバからサーバへの相互作用と、サーバからクライアントへの更新は、
+部分的更新が適用された後の、オブジェクトの完全に新しい表現を含むべきであることに注意すること。
+より詳しくは
+<a href="#update-activity-inbox">サーバ間相互作用での Update アクティビティ</a>
+の説明を参照のこと。
           </p>
         </section>
       </section>
       <section id="delete-activity-outbox">
         <h3>Delete Activity</h3>
         <p>
+<!--
           The <code>Delete</code> activity is used to delete an already
           existing object.
           The side effect of this is that the server MAY replace the
           <code>object</code> with a <code>Tombstone</code> of the object
           that will be displayed in activities which reference the deleted
           object.
+-->
+<code>Delete</code> アクティビティは、既に存在するオブジェクトを
+削除するために使われる。
+この副作用として、サーバは <code>object</code> を
+<code>Tombstone</code> of the object
+          that will be displayed in activities which reference the deleted
+          object
+に置き換えても良い(MAY)。
+<!--
           If the deleted object is requested the server SHOULD respond with
           either the HTTP 410 Gone status code if a <code>Tombstone</code>
           object is presented as the response body, otherwise respond with a
           HTTP 404 Not Found.
+-->
+削除されたオブジェクトが要求された場合、サーバは、
+レスポンスボディとして <code>Tombstone</code>
+オブジェクトが表現されている場合は HTTP 410 Gone ステータスを、
+さもなければ HTTP 404 Not Found ステータスを返すべきである (SHOULD)。
         </p>
 
+<!--
         <p>A deleted object:</p>
+-->
+        <p>削除されたオブジェクト:</p>
         <pre class="example">
           {
             "@context": "https://www.w3.org/ns/activitystreams",
@@ -1532,89 +2507,160 @@ Location: https://dustycloud.org/likes/345
       <section id="follow-activity-outbox">
         <h3>Follow Activity</h3>
         <p>
+<!--
           The <code>Follow</code> activity is used to subscribe to the
           activities of another actor.
+-->
+<code>Follow</code> アクティビティは、他の actor のアクティビティを
+購読するために使われる。
         </p>
         <p>
+<!--
           The side effect of receiving this in an <strong>outbox</strong>
           is that the server SHOULD add the <code>object</code> to the
           <code>actor</code>'s <a href="#following"><code>following</code> Collection</a>
           when and only if an <code>Accept</code> activity is subsequently
           received with this <code>Follow</code> activity as its object.
+-->
+これを <strong>outbox</strong> に受信した場合の副作用として、
+サーバは、この <code>Follow</code> アクティビティをオブジェクトとした
+<code>Accept</code> アクティビティを引き続いて受信した場合にのみ、
+<code>actor</code> の
+<a href="#following"><code>following</code> コレクション</a> に
+<code>object</code> を追加するべきである(SHOULD)。
         </p>
       </section>
       <section id="add-activity-outbox">
         <h3>Add Activity</h3>
         <p>
+<!--
           Upon receipt of an <code>Add</code> activity into the
           <strong>outbox</strong>, the server SHOULD
           add the <code>object</code> to the collection specified in the
           <code>target</code> property, unless:
+-->
+<code>Add</code> アクティビティを
+<strong>outbox</strong> に受け取ったとき、
+以下の場合を除いて、サーバは <code>object</code> を
+<code>target</code> プロパティで指定されたコレクションに追加するべきである(SHOULD):
         </p>
         <ul>
           <li>
+<!--
             the <code>target</code> is not owned by the receiving
             server, and thus they are not authorized to update it.
+-->
+<code>target</code> が受信サーバによって所有されておらず、
+従ってこれを更新する権限がない。
           </li>
           <li>
+<!--
             the <code>object</code> is not allowed to be added to the
             <code>target</code> collection for some other reason, at the
             receiving server's discretion.
+-->
+受信サーバの裁量により、なんらかの理由によって
+<code>object</code> を <code>target</code> コレクションに追加することを
+認められていない。
           </li>
         </ul>
       </section>
       <section id="remove-activity-outbox">
         <h3>Remove Activity</h3>
         <p>
+<!--
           Upon receipt of a <code>Remove</code> activity into the
           <strong>outbox</strong>, the server SHOULD
           remove the <code>object</code> from the collection specified in the
           <code>target</code> property, unless:
+-->
+          <strong>outbox</strong> に
+<code>Remove</code> アクティビティを受信すると、
+サーバは次の場合を除いて、
+          <code>target</code> 属性で指定されたコレクションから
+<code>object</code> を削除するべきである(SHOULD)。
         <ul>
           <li>
+<!--
             the <code>target</code> is not owned by the receiving server, and
             thus they are not authorized to update it.
+-->
+<code>target</code> が受信サーバの所有ではなく、
+従ってそれを更新する権限がない。
           </li>
           <li>
+<!--
             the <code>object</code> is not allowed to be removed from the
             <code>target</code> collection for some other reason, at the
             receiving server's discretion.
+-->
+<code>object</code> が、受信サーバの裁量により、何らかの他の理由で
+            <code>target</code> から削除することを認められていない。
           </li>
         </ul>
       </section>
       <section id="like-activity-outbox">
         <h3>Like Activity</h3>
         <p>
+<!--
           The <code>Like</code> activity indicates the <code>actor</code> likes
           the <code>object</code>.
+-->
+<code>Like</code> アクティビティは <code>actor</code> が
+<code>object</code> を好んでいることを示す。
         </p>
         <p>
+<!--
           The side effect of receiving this in an <strong>outbox</strong>
           is that the server SHOULD add the <code>object</code> to the
           <code>actor</code>'s <a href="#liked"><code>liked</code> Collection</a>.
+-->
+これを <strong>outbox</strong> に受信したときの副作用として、
+サーバは
+<code>actor</code> の <a href="#liked"><code>liked</code> コレクション</a> に
+この <code>object</code> を追加するべきである(SHOULD)。
         </p>
       </section>
       <section id="block-activity-outbox">
         <h3>Block Activity</h3>
         <p>
+<!--
           The <code>Block</code> activity is used to indicate that the posting
           actor does not want another actor (defined in the <code>object</code>
           property) to be able to interact with objects posted by the actor
           posting the <code>Block</code> activity.
           The server SHOULD prevent the blocked user from interacting with any object
           posted by the actor.
+-->
+<code>Block</code> アクティビティは、投稿したactorは
+(<code>object</code>属性で定義された)actorが
+<code>Block</code> アクティビティを投稿したactorによって投稿されたオブジェクトと
+相互作用出来ることを望まないことを示すために使われる。
+サーバはブロックしたユーザーと actor によって投稿された任意のオブジェクトとの
+相互作用を防止するべきである (SHOULD)。
         </p>
         <p>
+<!--
           Servers SHOULD NOT deliver Block Activities to their <code>object</code>.
+-->
+サーバは Block アクティビティをその <code>object</code> に
+配送するべきではない(SHOULD NOT)。
         </p>
       </section>
       <section id="undo-activity-outbox">
         <h3>Undo Activity</h3>
         <p>
+<!--
           The <code>Undo</code> activity is used to undo a previous activity.
           See the Activity Vocabulary documentation on
           <a href="https://www.w3.org/TR/activitystreams-vocabulary/#inverse">
             Inverse Activities and "Undo"</a>.
+-->
+<code>Undo</code> アクティビティは以前のアクティビティを取り消すときに使われる。
+Activity Vocabulary 文書の
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#inverse">
+            Inverse Activities and "Undo"</a> を参照のこと。
+<!--
           For example, <code>Undo</code> may be used to undo a previous
           <code>Like</code>, <code>Follow</code>, or <code>Block</code>.
           The undo activity and the activity being undone MUST both have the
@@ -1622,34 +2668,61 @@ Location: https://dustycloud.org/likes/345
           Side effects should be undone, to the extent possible.
           For example, if undoing a <code>Like</code>, any counter that had
           been incremented previously should be decremented appropriately.
+-->
+例えば、<code>Undo</code> は以前の
+<code>Like</code>, <code>Follow</code>, <code>Block</code> のいずれかの
+取り消しのために使われる。
+Undo アクティビティと取り消されるアクティビティはどちらも同じ actor を
+持っていなければならない(MUST)。
+副作用として、できるだけ広範囲に取り消しを行うべきである。
+例えば、もし <code>Like</code> を取り消すと、その前にインクリメントされた
+カウンタは適切にデクリメントされるべきである。
         </p>
 
         <p>
+<!--
           There are some exceptions where there is an existing and explicit
           "inverse activity" which should be used instead.
           <code>Create</code> based activities should instead use
           <code>Delete</code>, and <code>Add</code> activities should use
           <code>Remove</code>.
+-->
+既存の明示的な「逆アクティビティ」を代わりに使うべき例外がある。
+<code>Create</code> ベースのアクティビティは <code>Delete</code> を、
+<code>Add</code> アクティビティは <code>Remove</code> を使うべきである。
         </p>
       </section>
 
       <section id="client-to-server-outbox-delivery">
         <h3>Delivery</h3>
         <p>
+<!--
           Federated servers MUST perform delivery on all Activities posted to the
           <strong>outbox</strong> according to <a href="#outbox-delivery">
           outbox delivery</a>.
+-->
+連合サーバは <strong>outbox</strong> に投稿された全ての Activity を
+<a href="#outbox-delivery">
+          outbox delivery</a> に従って配送を実行しなければならない(MUST)。
         </p>
       </section>
 
       <section id="uploading-media" class="informative">
         <h2>Uploading Media</h2>
         <p>
+<!--
           Servers MAY support uploading document types to be referenced in
           activites, such as images, video or other binary data, but the
           precise mechanism is out of scope for this version of ActivityPub.
           The Social Web Community Group is refining the protocol in the
           <a href="https://www.w3.org/wiki/SocialCG/ActivityPub/MediaUpload">ActivityPub Media Upload report</a>.
+-->
+サーバは、画像、ビデオ、その他のバイナリデータのような、
+アクティビティで参照される文書型のアップロードに対応しても良い(MAY)が、
+正確な機構はこのバージョンの ActivityPub のスコープ外である。
+The Social Web Community Group は
+          <a href="https://www.w3.org/wiki/SocialCG/ActivityPub/MediaUpload">ActivityPub Media Upload report</a>
+でプロトコルを洗練させている。
         </p>
       </section>
 
@@ -1657,15 +2730,26 @@ Location: https://dustycloud.org/likes/345
     </section>
 
     <section id="server-to-server-interactions">
+<!--
       <h2>Server to Server Interactions</h2>
+-->
+      <h2>サーバからサーバへの通信</h2>
       <p>
+<!--
         Servers communicate with other servers and propagate information across
         the social graph by posting activities to actors'
         <a href="#inbox">inbox</a> endpoints.
         An Activity sent over the network SHOULD have an <code>id</code>,
         unless it is intended to be transient (in which case it MAY omit the
         <code>id</code>).
+-->
+サーバは、activity を actor の <a href="#inbox">inbox</a> エンドポイントに
+ポストすることで、他のサーバと通信し、情報をソーシャルグラフ上に伝搬させる。
+ネットワーク上を送られる Activity は、一時的であることを意図している場合を
+除き、<code>id</code> を持つべきである(SHOULD) (一時的な場合は
+<code>id</code> を省略しても良い(MAY))。
       <p>
+<!--
         <code>POST</code> requests (eg. to the inbox) MUST be made with a Content-Type of
         <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
         and <code>GET</code> requests (see also <a href="#retrieving-objects"></a>) 
@@ -1675,8 +2759,20 @@ Location: https://dustycloud.org/likes/345
         header of <code>application/activity+json</code> as equivalent
         to <code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
         for server-to-server interactions.
+-->
+(inbox などへの) <code>POST</code> リクエストは Content-Type に
+<code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code>
+を設定しなければならず(MUST)、<code>GET</code> リクエスト
+(<a href="#retrieving-objects"></a>も参照のこと) は Accept ヘッダに
+<code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code> を
+設定しなければならない(MUST)。
+サーバは、サーバからサーバへの通信において、Content-Type や Accept ヘッダの
+<code>application/activity+json</code> を
+<code>application/ld+json; profile="https://www.w3.org/ns/activitystreams"</code> と
+等価なものとして扱うべきである(SHOULD)。
       </p>
       <p>
+<!--
         In order to propagate updates throughout the social graph, Activities
         are sent to the appropriate recipients.
         First, these recipients are determined through following the
@@ -1684,67 +2780,131 @@ Location: https://dustycloud.org/likes/345
         the Activity is inserted into the actor's <em>inbox</em>
         (<a href="#delivery">delivery</a>).
         This allows recipient servers to:
+-->
+ソーシャルグラフ上に更新を伝搬させるために、Activity は適切な宛先に
+送信される。
+まず、これらの宛先は、actor に到達するまでオブジェクト間の適切なリンクを
+辿ることで決定され、
+それからこの Activity は actor の <em>inbox</em> に挿入される
+        (<a href="#delivery">delivery</a>)。
+これにより、宛先サーバは:
       </p>
       <ul>
         <li>
+<!--
           conduct any side effects related to the Activity (for example,
           notification that an actor has liked an object is used to update the
           object's like count);
+-->
+そのアクティビティに関連する副作用を実施する
+(例えば、ある actor があるオブジェクトに「いいね」をした通知は、
+そのオブジェクトの「いいね」カウントを更新するのに使われる);
         </li>
         <li>
+<!--
           deliver the Activity to recipients of the original object, to ensure
           updates are propagated to the whole social graph (see <a href="#inbox-forwarding">
           inbox delivery</a>).
+-->
+更新が確実にソーシャルグラフ全体に伝搬するように、
+Activity を元のオブジェクトの宛先に配送する
+(<a href="#inbox-forwarding">inbox delivery</a> を参照のこと)。
         </li>
       </ul>
+<!--
       <p>Delivery is usually triggered by, for example:</p>
+-->
+      <p>配送は通常、例えば以下のもので引き起こされる:</p>
       <ul>
         <li>
+<!--
           an Activity being created in an actor's <a href="#outbox">outbox</a>
           with their <a href="#followers">Followers Collection</a> as the
           recipient.
+-->
+actor の <a href="#outbox">outbox</a> に、宛先として
+<a href="#followers">Followers Collection</a> を指定して
+Activity が作成された。
         </li>
         <li>
+<!--
           an Activity being created in an actor's <a href="#outbox">outbox</a>
           with directly addressed recipients.
+-->
+actor の <a href="#outbox">outbox</a> に、
+直接アドレス指定された宛先で Activity が作成された。
         </li>
         <li>
+<!--
           an Activity being created in an actors's <a href="#outbox">outbox</a>
           with user-curated collections as recipients.
+-->
+actor の <a href="#outbox">outbox</a> に、
+ユーザーが選んだコレクションを宛先として
+Activity が作成された。
         </li>
         <li>
+<!--
           an Activity being created in an actor's <a href="#outbox">outbox</a> or
           <a href="#inbox">inbox</a> which references another object.
+-->
+actor の <a href="#outbox">outbox</a> や <a href="#inbox">inbox</a> に、
+他のオブジェクトを参照する Activity が作成された。
         </li>
       </ul>
 
       <p>
+<!--
         Servers performing delivery to the <code>inbox</code> or
         <code>sharedInbox</code> properties of actors on other servers MUST
         provide the <code>object</code> property in the activity:
         <code>Create</code>, <code>Update</code>, <code>Delete</code>,
         <code>Follow</code>, <code>Add</code>, <code>Remove</code>,
         <code>Like</code>, <code>Block</code>, <code>Undo</code>.
+-->
+他のサーバ上の actor の <code>inbox</code> や
+<code>publicInbox</code> 属性への配送を実行するサーバは、
+次のアクティビティ内に <code>object</code> 属性を提供しなければならない(MUST):
+        <code>Create</code>, <code>Update</code>, <code>Delete</code>,
+        <code>Follow</code>, <code>Add</code>, <code>Remove</code>,
+        <code>Like</code>, <code>Block</code>, <code>Undo</code>
+<!--
         Additionally, servers performing server to server delivery of the
         following activities MUST also provide the <code>target</code>
         property: <code>Add</code>, <code>Remove</code>.
+-->
+さらに、以下のアクティビティのサーバ間配送を実行するサーバは、
+<code>target</code> 属性も提供しなければならない(MUST):
+<code>Add</code>, <code>Remove</code>
       </p>
 
       <p>
+<!--
         HTTP caching mechanisms [[!RFC7234]] SHOULD be respected when
         appropriate, both when receiving responses from other servers as well
         as sending responses to other servers.
+-->
+他のサーバからの返答を受信するときと他のサーバへ返答を送信するときの
+両方において、適切な場合には HTTP キャッシュ機構 [[!RFC7234]] に
+遵守するべきである(SHOULD)。
       </p>
 
       <section id="delivery">
+<!--
         <h2>Delivery</h2>
+-->
+        <h2>配送</h2>
 
         <p><i>
+<!--
           The following is required by federated servers communicating with
           other federated servers only.
+-->
+          以下は他の連合サーバと通信する連合サーバのみに要求される。
         </i></p>
 
         <p>
+<!--
           An activity is delivered to its targets (which are
           <a href="#actors">actors</a>) by first looking up the targets'
           inboxes and then posting the activity to those inboxes.
@@ -1753,9 +2913,20 @@ Location: https://dustycloud.org/likes/345
             ActivityStreams audience targeting</a>;
           namely, the <code>to</code>, <code>bto</code>, <code>cc</code>,
           <code>bcc</code>, and <code>audience</code> fields of the activity.
+-->
+アクティビティは、まずターゲット(これは<a href="#actors">actor</a>)の
+inboxを探して、それからそのinboxにアクティビティを投稿することで配送される。
+配送するターゲットは、
+<a href="https://www.w3.org/TR/activitystreams-vocabulary/#audienceTargeting">
+ActivityStreams audience targeting</a>
+をチェックすることで決定される;
+つまり、アクティビティの
+<code>to</code>, <code>bto</code>, <code>cc</code>,
+<code>bcc</code>, <code>audience</code> フィールドである。
         </p>
 
         <p>
+<!--
           The <a href="#inbox">inbox</a> is determined by first
           <a href="#retrieving-objects">
             retrieving the target actor's JSON-LD representation</a>
@@ -1765,16 +2936,32 @@ Location: https://dustycloud.org/likes/345
           credentials) and discover inboxes for each item in the collection.
           Servers MUST limit the number of layers of indirections through
           collections which will be performed, which MAY be one.
+-->
+<a href="#inbox">inbox</a> はまず
+<a href="#retrieving-objects">ターゲットactorのJSON-LD表現を取得</a>し、
+それから <code>inbox</code> 属性を探すことで決定される。
+宛先が <code>Collection</code> または <code>OrderedCollection</code> の場合、
+サーバはコレクションを(ユーザーの認証情報と共に)展開し、コレクションの
+それぞれの要素の inbox を発見しなければならない(MUST)。
+サーバはコレクションの展開を実行する層の数を制限しなければならない(MUST)。
+これは 1 でもよい(MAY)。
         </p>
 
         <p>
+<!--
           Servers MUST de-duplicate the final recipient list. Servers MUST also
           exclude actors from the list which are the same as the <code>actor</code>
           of the Activity being notified about. That is, actors shouldn't have their
           own activities delivered to themselves.
+-->
+サーバは最終的な宛先リストの重複を解消しなければならい(MUST)。
+サーバはまた、通知される Activity の <code>actor</code> と同じ actor を
+リストから除去しなければならない(MUST)。
+つまり、ユーザーは自分の activity を自分に配送することはできない。
         </p>
 
         <p class="note" title="Silent and private activities">
+<!--
           What to do when there are no recipients specified is not defined,
           however it's recommended that if no recipients are specified the
           object remains completely private and access controls restrict the
@@ -1782,9 +2969,16 @@ Location: https://dustycloud.org/likes/345
           If the object is just sent to the "public" collection the object is
           not delivered to any actors but is publicly viewable in the actor's
           outbox.
+-->
+宛先がない場合にどうするかは未定義であるが、もし宛先が指定されなかった場合、
+オブジェクトを完全にプライベートな状態において、アクセスコントロールは
+そのオブジェクトへのアクセスを制限することが推奨される。
+もしオブジェクトが単に "public" コレクションに送信された場合、
+オブジェクトは誰にも配送されないが、actor の outbox で公に閲覧可能になる。
         </p>
 
         <p>
+<!--
           An HTTP POST request (with authorization of the submitting user) is
           then made to the <a href="#inbox">inbox</a>, with the Activity as
           the body of the request.
@@ -1792,21 +2986,41 @@ Location: https://dustycloud.org/likes/345
           <a href="#inbox">inbox</a> OrderedCollection.
           Attempts to deliver to an inbox on a non-federated server SHOULD
           result in a <code>405 Method Not Allowed</code> response.
+-->
+(投稿ユーザーの認証付きの) HTTP POST リクエストは、
+アクティビティをリクエストのボディとして
+<a href="#inbox">inbox</a>に行われる。
+このアクティビティは受信者によって
+          <a href="#inbox">inbox</a> OrderedCollection の
+<code>item</code> として追加される。
+非連合サーバの inbox へ配送しようとする試みは
+<code>405 Method Not Allowed</code> レスポンスを返すべきである(SHOULD)。
         </p>
 
         <p>
+<!--
           For federated servers performing delivery to a third party server,
           delivery SHOULD be performed asynchronously, and SHOULD additionally
           retry delivery to recipients if it fails due to network error.
+-->
+連合サーバがサードパーティーサーバへ配送を実行する場合には、
+配送は非同期に実行されるべきであり(SHOULD)、
+これがネットワークエラーによって失敗した場合は受信者への配送を
+再試行するべきである(SHOULD)。
         </p>
 
         <p>
+<!--
           <strong>Note:</strong> Activities being distributed between actors on
           the same origin may use any internal mechanism, and are not required
           to use HTTP.
+-->
+          <strong>Note:</strong> 同じ origin の actor 間で
+配送される Activity は任意の内部機構を使ってもよく、HTTP を使うことは要求されない。
         </p>
 
         <p class="note" id="ldn-relationship" title="Relationship to Linked Data Notifications">
+<!--
           While it is not required reading to understand this specification,
           it is worth noting that ActivityPub's targeting and delivery
           mechanism overlaps with the
@@ -1823,43 +3037,89 @@ Location: https://dustycloud.org/likes/345
           However, ActivityPub implementations which wish to be more broadly
           compatible with Linked Data Notifications implementations may wish to
           support other RDF representations.
+-->
+この仕様を理解するのに読むのは必須ではないが、
+ActivityPub のターゲットと配送の機構は
+<a href="https://www.w3.org/TR/ldn/">Linked Data Notifications</a> 仕様と
+重複していて、二つの仕様は相互に結合できることは記しておく価値がある。
+特に、<code>inbox</code> 属性は ActivityPub と Linked Data Notifications で
+同じで、この文書に記述されているターゲットと配送の機構は
+Linked Data Notifications に支えられている。
+JSON-LD コンパクト化 ActivityStreams 文書に加えて、
+Linked Data Notifications は、ActivityPub 実装で必要でない様々な
+RDF 直列化も対応している。
+しかし、より広く Linked Data Notifications 実装と互換性を持たせたい
+ActivityPub 実装は、その他の RDF 表現に対応した方がよい。
         </p>
 
         <section id="outbox-delivery">
+<!--
           <h3>Outbox Delivery Requirements for Server to Server</h3>
+-->
+          <h3>サーバ-サーバ間のoutbox配送の要件</h3>
           <p>
+<!--
             When objects are received in the <a href="#outbox">outbox</a>
             (for servers which support both
             <a href="#client-to-server-interactions">Client to Server interactions</a>
             and
             <a href="#server-to-server-interactions">Server to Server Interactions</a>),
             the server MUST target and deliver to:
+-->
+オブジェクトを <a href="#outbox">outbox</a> に受信したとき(
+<a href="#client-to-server-interactions">クライアントからサーバへの通信</a>
+と
+<a href="#server-to-server-interactions">サーバからサーバへの通信</a>
+の両方に対応しているサーバの場合)、サーバは
+以下にターゲットして配送しなければならい(MUST):
           </p>
           <ul>
             <li>
+<!--
               The <code>to</code>, <code>bto</code>, <code>cc</code>,
               <code>bcc</code> or <code>audience</code> fields if their values
               are individuals or Collections owned by the actor.
+-->
+<code>to</code>, <code>bto</code>, <code>cc</code>, <code>bcc</code>,
+<code>audience</code> のいずれかのフィールド; その値が
+個人かactorに所有されているコレクションの場合。
             </li>
           </ul>
           <p>
+<!--
             These fields will have been <a href="#client-addressing">
             populated appropriately by the client</a> which posted the Activity
             to the outbox.
+-->
+これらのフィールドは、このアクティビティをoutboxに投稿した
+<a href="#client-addressing">
+クライアントによって適切に展開されている</a>。
           </p>
         </section>
 
         <section id="inbox-forwarding">
+<!--
           <h3>Forwarding from Inbox</h3>
+-->
+          <h3>inboxからの転送</h3>
 
+<!--
           <div class="note" title="Forwarding to avoid the ghost replies problem">
+-->
+          <div class="note" title="ゴーストリプライ問題を回避するための転送">
             <p>
+<!--
               The following section is to mitigate the "ghost replies" problem
               which occasionally causes problems on federated networks.
               This problem is best demonstrated with an example.
+-->
+以下の節は、連合ネットワークで時々問題を引き起こす、
+「ゴーストリプライ」問題を緩和するためのものである。
+この問題を例で示す。
             </p>
 
             <p>
+<!--
               Alyssa makes a post about her having successfully presented a
               paper at a conference and sends it to her followers collection,
               which includes her friend Ben.
@@ -1872,24 +3132,53 @@ Location: https://dustycloud.org/likes/345
               Ben, her followers would see Alyssa replying to Ben without having
               ever seen Ben interacting.
               This would be very confusing!
+-->
+Alyssa は、会議での論文の発表が上手くいったことを投稿し、
+友人である Ben を含む彼女のフォロワーコレクションに送りました。
+Ben は祝福する内容を Alyssa のメッセージに返信し、
+宛先に彼女のフォロワーコレクションを含めました。
+しかし、Ben は Alyssa のフォロワーコレクションの内容にアクセス出来ないので、
+Ben のサーバは彼のメッセージを彼らの inbox に転送できません。
+次の機構がない場合、その後 Alyssa が Ben に返信すると、
+彼女のフォロワーは、Ben の返信を見ることなく Alyssa が Ben に返信するのを
+見ることになります。
+これはとても混乱します!
             </p>
           </div>
 
           <p>
+<!--
             When Activities are received in the <a href="#inbox">inbox</a>, the
             server needs to forward these to recipients that the origin was unable
             to deliver them to. To do this, the server MUST target and
             <a href="#delivery">deliver</a>
             to the values of <code>to</code>, <code>cc</code>, and/or <code>audience</code>
             if and only if all of the following are true:
+-->
+Activity を <a href="#inbox">inbox</a> に受信したとき、
+サーバはこれらを送信元が配信できない宛先に転送する必要がある。
+これを行うために、サーバは次の全てが真の場合にのみ、
+<code>to</code>, <code>cc</code>, <code>audience</code>
+の値にターゲットして
+            <a href="#delivery">配送</a>
+しなければならない(MUST):
           </p>
           <ul>
+<!--
             <li>This is the first time the server has seen this Activity.</li>
+-->
+            <li>サーバがこの Activity を見るのは初めてである。</li>
             <li>
+<!--
               The values of <code>to</code>, <code>cc</code>, and/or
               <code>audience</code> contain a Collection owned by the server.
+-->
+              <code>to</code>, <code>cc</code>,
+              <code>audience</code> の値に
+サーバが所有しているコレクションが含まれている。
             </li>
             <li>
+<!--
               The values of <code>inReplyTo</code>, <code>object</code>,
               <code>target</code> and/or <code>tag</code> are objects owned by
               the server.
@@ -1903,25 +3192,57 @@ Location: https://dustycloud.org/likes/345
               on the original object being forwarded, and not pick up any new
               addressees whilst recursing through the linked objects
               (in case these addressees were purposefully amended by or via the client).
+-->
+<code>inReplyTo</code>, <code>object</code>,
+              <code>target</code>, <code>tag</code> の値が
+サーバが所有しているオブジェクトである。
+サーバは、自身が所有しているリンクされたオブジェクトを探すためにこれらの値を
+再帰するべきであり(SHOULD)、
+再帰の上限を設定するべきである(SHOULD) 
+(ie. the
+              point at which the thread is so deep the recipients followers may not mind
+              if they are no longer getting updates that don't directly involve the
+              recipient).
+サーバは転送された元のオブジェクトの
+<code>to</code>, <code>cc</code>, <code>audience</code> の値のみを
+ターゲットし、(これらのアドレスが意図的に変更されたりクライアントによって)
+リンクされたオブジェクトを再帰している間の新しい受信者を拾わないように
+しなかければならない(MUST)。
             </li>
           </ul>
           <p>
+<!--
             The server MAY filter its delivery targets according to
             implementation-specific rules (for example, spam filtering).
+-->
+サーバは配送ターゲットを実装依存の規則(例えば spam フィルタ)で
+フィルタリングしてもよい(MAY)。
           </p>
         </section>
 
         <section id="shared-inbox-delivery">
+<!--
           <h2>Shared Inbox Delivery</h2>
+-->
+          <h2>共有 Inbox への配送</h2>
           <p>
+<!--
             For servers hosting many actors, delivery to all followers can
             result in an overwhelming number of messages sent.
             Some servers would also like to display a list of all messages
             posted publicly to the "known network".
             Thus ActivityPub provides an optional mechanism for serving these
             two use cases.
+-->
+多くの actor をホスティングしているサーバでは、
+全てのフォロワーへの配送は大量のメッセージを送信することになることがある。
+一部のサーバはまた、パブリックに投稿された全てのメッセージのリストを
+"known network" として表示したい。
+従って ActivityPub はこれら二つのユースケースを扱うためのオプションの機構を
+提供する。
           </p>
           <p>
+<!--
             When an object is being delivered to the originating actor's
             followers, a server MAY reduce the number of receiving actors
             delivered to by identifying all followers which share the same
@@ -1931,14 +3252,31 @@ Location: https://dustycloud.org/likes/345
             Thus in this scenario, the remote/receiving server participates
             in determining targeting and performing delivery to specific
             inboxes.
+-->
+配送元actorのfollowersにオブジェクトが配送されるとき、
+サーバは、同じ <a href="#sharedInbox">sharedInbox</a> を持つ全ての
+フォロワーを識別して、
+代わりにオブジェクトを <code>sharedInbox</code> という名前に配送することで
+配送する受信アクターの数を減らしても良い(MAY)。.
+従ってこのシナリオでは、
+リモート/受信サーバは特定の inbox へのターゲットと配送の実行の
+決定に関与する。
           </p>
           <p>
+<!--
             Additionally, if an object is addressed to the
             <a href="#public-addressing">Public</a> special collection, a
             server MAY deliver that object to all known
             <code>sharedInbox</code> endpoints on the network.
+-->
+さらに、オブジェクトが
+<a href="#public-addressing">Public</a> 特殊コレクションに
+アドレス指定されている場合、
+サーバはこのオブジェクトをネットワーク上の全ての既知の
+<code>sharedInbox</code> エンドポイントに配送しても良い(MAY)。
           </p>
           <p>
+<!--
             Origin servers sending publicly addressed activities to
             <code>sharedInbox</code> endpoints MUST still deliver to actors
             and collections otherwise addressed (through <code>to</code>,
@@ -1946,6 +3284,16 @@ Location: https://dustycloud.org/likes/345
             <code>audience</code>) which do not have a <code>sharedInbox</code>
             and would not otherwise receive the activity through the
             <code>sharedInbox</code> mechanism.
+-->
+パブリックにアドレス指定されたアクティビティを <code>sharedInbox</code>
+エンドポイントに送信する送信元サーバは、
+その他に
+(<code>to</code>,
+            <code>bto</code>, <code>cc</code>, <code>bcc</code>, および
+            <code>audience</code> を通して) アドレス指定された、
+<code>sharedInbox</code> を持たないので
+            <code>sharedInbox</code> 機構を通じてアクティビティを
+受信できない actor やコレクションには配送しなければならない(MUST)。
           </p>
         </section>
       </section>
@@ -1953,6 +3301,7 @@ Location: https://dustycloud.org/likes/345
       <section id="create-activity-inbox">
         <h3>Create Activity</h3>
         <p>
+<!--
           Receiving a <code>Create</code> activity in an <code>inbox</code> has
           surprisingly few side effects; the activity should appear in the
           actor's <code>inbox</code> and it is likely that the server will want
@@ -1960,12 +3309,21 @@ Location: https://dustycloud.org/likes/345
           object.
           However, this mostly happens in general with processing activities
           delivered to an <code>inbox</code> anyway.
+-->
+<code>inbox</code> に <code>Create</code> アクティビティを受信したときには、
+意外にもほとんど副作用はない;
+このアクティビティは actor の <code>inbox</code> に現れるべきで、
+サーバはおそらくこのアクティビティとそれに添付されているオブジェクトの表現を
+ローカルに保管したいはずである。
+しかし、これはとにかく <code>inbox</code> にアクティビティが配送されたときに
+ほとんど一般的に処理されることである。
         </p>
       </section>
 
       <section id="update-activity-inbox">
         <h3>Update Activity</h3>
         <p>
+<!--
           For server to server interactions, an <code>Update</code> activity
           means that the receiving server SHOULD update its copy of the
           <code>object</code> of the same <code>id</code> to the copy
@@ -1974,29 +3332,58 @@ Location: https://dustycloud.org/likes/345
           <a href="#update-activity-outbox">
             client to server handling of the Update activity</a>,
           this is not a partial update but a complete replacement of the object.
+-->
+サーバからサーバへの通信では、
+<code>Update</code> アクティビティは、
+同じ <code>id</code> の <code>object</code> のコピーを、
+<code>Update</code> アクティビティの中に供給されているコピーで
+更新するべきである(SHOULD)。
+          <a href="#update-activity-outbox">
+Update アクティビティのクライアントからサーバへの扱い</a> と異なり、
+これは部分更新ではなくオブジェクトの完全な置き換えである。
         </p>
         <p>
+<!--
           The receiving server MUST take care to be sure that the
           <code>Update</code> is authorized to modify its <code>object</code>.
           At minimum, this may be done by ensuring that the <code>Update</code>
           and its <code>object</code> are of same origin.
+-->
+受信サーバは
+<code>Update</code> がその <code>object</code> を修正する権限があることを
+確認することに注意しなければならない(MUST)。
+最小限として、これは <code>Update</code> とその
+<code>object</code> が同じ送信元であることを確認することで行われる。
         </p>
       </section>
 
       <section id="delete-activity-inbox">
         <h3>Delete Activity</h3>
         <p>
+<!--
           The side effect of receiving this is that (assuming the
           <code>object</code> is owned by the sending actor / server) the
           server receiving the delete activity SHOULD remove its representation
           of the <code>object</code> with the same <code>id</code>, and MAY
           replace that representation with a <code>Tombstone</code> object.
+-->
+<code>object</code> が送信した actor / server が所有していると仮定して)
+これを受信したときの副作用として、
+delete アクティビティを受信したサーバは
+同じ <code>id</code> を持つ
+<code>object</code> の表現を削除するべき(SHOULD)で、
+表現を <code>Tombstone</code> オブジェクトに置き換えても良い(MAY)。
         </p>
         <p>
+<!--
           (Note that after an activity has been transmitted from an origin
           server to a remote server, there is nothing in the ActivityPub
           protocol that can <em>enforce</em> remote deletion of an object's
           representation).
+-->
+(あるアクティビティが発信元サーバからリモートサーバに転送された後、
+オブジェクトの表現をリモートをリモートで削除することを <em>強制する</em>
+方法は、ActivityPub プロトコルにはないということに注意すること。)
         </p>
       </section>
 
@@ -2004,6 +3391,7 @@ Location: https://dustycloud.org/likes/345
         <h3>Follow Activity</h3>
 
         <p>
+<!--
           The side effect of receiving this in an <strong>inbox</strong> is
           that the server SHOULD generate either an <code>Accept</code> or
           <code>Reject</code> activity with the Follow as the
@@ -2018,9 +3406,23 @@ Location: https://dustycloud.org/likes/345
           intermediate state.
           For example, a server might not send a <code>Reject</code> to protect
           a user's privacy.
+-->
+これを <strong>inbox</strong> に受信したときの副作用として、
+サーバは、この Follow を <code>object</code> に設定した
+<code>Accept</code> または <code>Reject</code> アクティビティを生成し、
+Follow した <code>actor</code> に配送するべきである(SHOULD)。
+<code>Accept</code> や <code>Reject</code> は自動的に生成しても良い(MAY)し、
+(おそらくはユーザーの確認のための多少の遅延の後)ユーザー入力の
+結果としてもよい(MAY)。
+サーバは <code>Follow</code> への応答として明示的に <code>Reject</code> を
+送らないという選択をしてもよい(MAY)が、実装者はリクエストを送信したサーバが
+中間的な状態のままになるかもしれないことに注意するべきである。
+例えば、サーバはユーザーのプライバシーを守るために <code>Reject</code> を
+送信しないかもしれない。
         </p>
 
         <p>
+<!--
           In the case of receiving an <code>Accept</code> referencing this
           <code>Follow</code> as the object, the server SHOULD add the
           <code>actor</code> to the object actor's
@@ -2028,10 +3430,19 @@ Location: https://dustycloud.org/likes/345
           In the case of a <code>Reject</code>, the server MUST NOT add the
           actor to the object actor's
           <a href="#followers">Followers Collection</a>.
+-->
+この <code>Follow</code> を object として参照している <code>Accept</code> を
+受信する場合、サーバは object の actor の
+<a href="#followers">Followers Collection</a> に
+<code>actor</code> を追加するべきである(SHOULD)。
+<code>Reject</code> の場合、object の actor の
+<a href="#followers">Followers Collection</a> に actor を
+追加してはならない(MUST NOT)。
         </p>
 
         <div class="note">
           <p>
+<!--
             Sometimes a successful <code>Follow</code> subscription may
             occur but at some future point delivery to the follower fails
             for an extended period of time.
@@ -2044,6 +3455,16 @@ Location: https://dustycloud.org/likes/345
             from the <code>followers</code> list.
             Timeframes and behavior for dealing with unreachable actors are
             left to the discretion of the delivering server.
+-->
+時々、<code>Follow</code> 購読が成功したものの、将来のある時点で
+長期間フォロワーへの配送が失敗するようになることがある。
+実装は、ネットワーク上の actor が到達可能であり続ける保証がないことに注意し、
+それに応じて実装するべきである。
+例として、ある actor への配送の試みが例えば 6 ヶ月間フォロワーに
+到達不能であり続けた場合、配送サーバがその購読者を <code>followers</code> から
+削除するのは合理的である。
+到達不能な actor を扱うための期間と振る舞いは配送サーバの
+裁量に委ねられている。
           </p>
         </div>
         
@@ -2052,106 +3473,178 @@ Location: https://dustycloud.org/likes/345
       <section id="accept-activity-inbox">
         <h3>Accept Activity</h3>
         <p>
+<!--
           The side effect of receiving this in an <strong>inbox</strong> is
           determined by the type of the <code>object</code> received,
           and it is possible to accept types not described in this document
           (for example, an <code>Offer</code>).
+-->
+これを <strong>inbox</strong> に受信した場合の副作用は、受信した
+<code>object</code> の型によって決定され、(例えば  <code>Offer</code> のような)
+この文書に記述していない型を受け入れることも可能である。
         </p>
 
         <p>
+<!--
           If the <code>object</code> of an <code>Accept</code> received to an
           <strong>inbox</strong> is a <code>Follow</code> activity
           previously sent by the receiver, the server SHOULD add the
           <code>actor</code> to the receiver's
           <a href="#following">Following Collection</a>.
+-->
+<strong>inbox</strong> に受信した <code>Accept</code> の
+<code>object</code> が、以前受信者によって送られた
+<code>Follow</code> アクティビティの場合、
+サーバは 受信者の <a href="#following">Following Collection</a> に
+<code>actor</code> を追加するべきである(SHOULD)。
         </p>
       </section>
       
       <section id="reject-activity-inbox">
         <h3>Reject Activity</h3>
         <p>
+<!--
           The side effect of receiving this in an <strong>inbox</strong> is
           determined by the type of the <code>object</code> received,
           and it is possible to reject types not described in this document
           (for example, an <code>Offer</code>).
+-->
+これを <strong>inbox</strong> に受信することによる副作用は、
+受信した <code>object</code> の型によって決定され、
+この文書に記述されていない型 (例えば <code>Offer</code>)を
+拒否することもできる。
         </p>
 
         <p>
+<!--
           If the <code>object</code> of a <code>Reject</code> received to an
           <strong>inbox</strong> is a <code>Follow</code> activity
           previously sent by the receiver, this means the recipient did not
           approve the <code>Follow</code> request. The server MUST NOT add the
           <code>actor</code> to the receiver's
           <a href="#following">Following Collection</a>.
+-->
+<strong>inbox</strong> に受信した <code>Reject</code> の
+<code>object</code> が、以前受信者によって送られた
+<code>Follow</code> アクティビティの場合、
+これは受け取り側が <code>Follow</code>  リクエストを承認しなかったことを
+意味する。
+サーバは受信者の <a href="#following">Following Collection</a> に
+<code>actor</code> を追加してはならない(MUST)。
         </p>
       </section>
 
       <section id="add-activity-inbox">
         <h3>Add Activity</h3>
         <p>
+<!--
           Upon receipt of an <code>Add</code> activity into the
           <strong>inbox</strong>, the server SHOULD
           add the <code>object</code> to the collection specified in the
           <code>target</code> property, unless:
+-->
+<code>Add</code> アクティビティを <strong>inbox</strong> に受け取ったとき、
+次のような場合を除いて、サーバは <code>target</code> 属性で指定された
+コレクションに <code>object</code> を追加するべきである (SHOULD):
         </p>
         <ul>
           <li>
+<!--
             the <code>target</code> is not owned by the receiving server, and
             thus they can't update it.
+-->
+<code>target</code> を受信サーバが所有しておらず、従って更新できない場合。
           </li>
           <li>
+<!--
             the <code>object</code> is not allowed to be added to the
             <code>target</code> collection for some other reason, at the
             receiver's discretion.
+-->
+受信者の裁量による何らかの理由により、
+<code>object</code> を <code>target</code> コレクションに
+追加することを認められていない場合。
           </li>
         </ul>
       </section>
       <section id="remove-activity-inbox">
         <h3>Remove Activity</h3>
         <p>
+<!--
           Upon receipt of a <code>Remove</code> activity into the
           <strong>inbox</strong>, the server SHOULD
           remove the <code>object</code> from the collection specified in the
           <code>target</code> property, unless:
+-->
+<code>Remove</code> アクティビティを <strong>inbox</strong> に受け取ったとき、
+次のような場合を除いて、サーバは <code>target</code> 属性で指定された
+コレクションから <code>object</code> を除去するべきである (SHOULD):
         <ul>
           <li>
+<!--
             the <code>target</code> is not owned by the receiving server, and
             thus they can't update it.
+-->
+<code>target</code> を受信サーバが所有しておらず、従って更新できない場合。
           </li>
           <li>
+<!--
             the <code>object</code> is not allowed to be removed to the
             <code>target</code> collection for some other reason, at the
             receiver's discretion.
+-->
+受信者の裁量による何らかの理由により、
+<code>object</code> を <code>target</code> コレクションから
+削除することを認められていない場合。
           </li>
         </ul>
       </section>
       <section id="like-activity-inbox">
         <h3>Like Activity</h3>
         <p>
+<!--
           The side effect of receiving this in an <strong>inbox</strong> is
           that the server SHOULD increment the object's count of likes by
           adding the received activity to the
           <a href="#likes"><code>likes</code></a> collection
           if this collection is present.
+-->
+これを <strong>inbox</strong> に受信したときの副作用として、
+サーバは、<a href="#likes"><code>likes</code></a> コレクションがある場合は、
+このコレクションに受信したアクティビティを追加することで
+このオブジェクトのいいねのカウントを増やすべきである (SHOULD)。
         </p>
       </section>
       <section id="announce-activity-inbox">
         <h3>Announce Activity (sharing)</h3>
         <p>
+<!--
           Upon receipt of an <code>Announce</code> activity in an
           <strong>inbox</strong>, a server SHOULD increment the object's count
           of shares by adding the received activity to the
           <a href="#shares"><code>shares</code></a> collection
           if this collection is present.
+-->
+<code>Announce</code> アクティビティを <strong>inbox</strong> に
+受け取ったとき、サーバは、<a href="#shares"><code>shares</code></a>
+コレクションがある場合は、このコレクションに受信したアクティビティを
+追加することで、
+このオブジェクトの共有のカウントを増やすべきである (SHOULD)。
+
         </p>
         <div class="note">
+<!--
           The <code>Announce</code> activity is effectively what is known as
           "sharing", "reposting", or "boosting" in other social networks.
+-->
+<code>Announce</code> アクティビティは事実上他のソーシャルネットワークでの
+          "sharing", "reposting", "boosting" として知られているものである。
         </div>
       </section>
       <section id="undo-activity-inbox">
         <h3>Undo Activity</h3>
         <p>
+<!--
           The <code>Undo</code> activity is used to undo the side effects
           of previous activities.
           See the ActivityStreams documentation on
@@ -2163,13 +3656,27 @@ Location: https://dustycloud.org/likes/345
             the Undo activity in the context of client to server
             interactions</a>,
           but applied to a federated context.
+-->
+<code>Undo</code> アクティビティは、以前のアクティビティの副作用を
+取り消すために使われる。
+ActivityStreams 文書の
+          <a href="https://www.w3.org/TR/activitystreams-vocabulary/#inverse">
+            Inverse Activities and "Undo"</a> を参照のこと。
+<code>Undo</code> アクティビティのスコープと制限は
+          <a href="#undo-activity-outbox">
+            クライアントサーバ間での Undo アクティビティ</a> と同様であるが、
+連合コンテキストに適用される。
         </p>
       </section>
     </section>
 
     <section id="i18n-concerns" class="appendix informative">
+<!--
       <h2>Internationalization</h2>
+-->
+      <h2>国際化</h2>
       <p>
+<!--
         Building an international base of users is important in a federated
         network.
         <a href="https://www.w3.org/TR/activitystreams-core/#naturalLanguageValues">
@@ -2179,11 +3686,27 @@ Location: https://dustycloud.org/likes/345
         <a href="https://www.w3.org/TR/activitystreams-core/#defaultlangcontext">
           <code>@language</code> property</a>
         to provide for user-submitted content.
+-->
+連合ネットワークにおいてユーザーの国際化の基礎を構築することは重要である。
+<a href="https://www.w3.org/TR/activitystreams-core/#naturalLanguageValues">
+ActivityStreams はコンテンツの国際化のためのツールを提供</a> しており、
+可能であればこれが使われるべきである。
+しかし、ユーザーが投稿したコンテンツに対してどの
+<a href="https://www.w3.org/TR/activitystreams-core/#defaultlangcontext">
+<code>@language</code> 属性</a> を
+提供するかを決定するのは実装上難しいかもしれない。
+<!--
         The
         <a href="https://www.w3.org/International/">W3C Internationalization group</a>
         provides some
         <a href="https://www.w3.org/International/wiki/LanguageDetection">
           guidance on language detection</a>.
+-->
+<a href="https://www.w3.org/International/">W3C Internationalization group</a>
+はいくつかの
+<a href="https://www.w3.org/International/wiki/LanguageDetection">
+言語検出のガイド</a>
+を提供している。
       </p>
     </section>
 
@@ -2191,20 +3714,35 @@ Location: https://dustycloud.org/likes/345
       <h2>Security Considerations</h2>
       
       <section id="authorization">
+<!--
         <h3>Authentication and Authorization</h3>
+-->
+        <h3>認証と認可</h3>
         <p>
+<!--
           ActivityPub uses authentication for two purposes; first, to
           authenticate clients to servers, and secondly in federated
           implementations to authenticate servers to each other.
+-->
+ActivityPub は認証を二つの目的で用いる; 
+一つ目はクライアントからサーバへの認証、
+二つ目は連合実装においてサーバ間の認証である。
         </p>
 
         <p>
+<!--
           Unfortunately at the time of standardization, there are no strongly
           agreed upon mechanisms for authentication.
           Some possible directions for authentication are laid out 
           <a href="https://www.w3.org/wiki/SocialCG/ActivityPub/Authentication_Authorization">in 
           the Social Web Community Group Authentication and 
           Authorization best practices report</a>.
+-->
+残念ながら標準化の時点で、認証機構として強力に合意されたものはない。
+認証で取り得る方向性は
+<a href="https://www.w3.org/wiki/SocialCG/ActivityPub/Authentication_Authorization"
+>the Social Web Community Group Authentication and 
+Authorization best practices report</a> にある。
         </p>
 
       </section>
@@ -2212,22 +3750,37 @@ Location: https://dustycloud.org/likes/345
       <section id="security-verification">
         <h2>Verification</h2>
         <p>
+<!--
           Servers should not trust client submitted content, and
           federated servers also should not trust content received from a server
           other than the content's origin without some form of verification.
+-->
+何らかの形の検証なしに、サーバはクライアントが投稿したコンテンツを
+信頼するべきではないし、
+連合サーバはコンテンツの発信源以外のサーバから受け取ったコンテンツを
+信頼するべきではない。
         </p>
         <p>
+<!--
           Servers should be careful to verify that new content is really posted
           by the actor that claims to be posting it, and that the actor has
           permission to update the resources it claims to.
           See also
           <a href="#obj"></a> and <a href="#authorization"></a>.
+-->
+新しいコンテンツが、それを投稿したと主張している actor から本当に
+投稿されていることと、その actor がそのリソースを更新する権限を
+持っていることを、
+サーバは慎重に検証するべきである。
+          <a href="#obj"></a> と <a href="#authorization"></a>
+も参照のこと。
         </p>
       </section>
 
       <section id="security-localhost">
         <h2>Accessing localhost URIs</h2>
         <p>
+<!--
           It is often convenient while developing to test against a process
           running on localhost.
           However, permitting requests to localhost in a production client or
@@ -2235,17 +3788,30 @@ Location: https://dustycloud.org/likes/345
           Making requests to URIs on localhost which do not require
           authorization may unintentionally access or modify resources assumed
           to be protected to be usable by localhost-only.
+-->
+開発中、localhost で実行したプロセスに対してテストするのはしばしば有用である。
+しかし、製品版クライアントやサーバインスタンスで localhost への
+リクエストを許すことは危険なことがある。
+認証を必要としない localhost の URI へのリクエストは、localhost でのみ
+利用可能として保護されていることを想定されているリソースへのアクセスや修正が
+意図せず起きることがある。
         </p>
         <p>
+<!--
           If your ActivityPub server or client does permit making requests to
           localhost URIs for development purposes, consider making it a
           configuration option which defaults to off.
+-->
+自作の ActivityPub サーバやクライアントが開発目的のために localhost URI への
+リクエストを許す場合、デフォルトでオフの設定オプションにすることを
+考慮すること。
         </p>
       </section>
 
       <section id="security-uri-schemes">
         <h2>URI Schemes</h2>
         <p>
+<!--
           There are many types of URIs aside from just <code>http</code> and
           <code>https</code>.
           Some libraries which handle fetching requests at various URI schemes
@@ -2254,35 +3820,62 @@ Location: https://dustycloud.org/likes/345
           Client and server authors should carefully check how their libraries
           handle requests, and potentially whitelist only certain safe URI
           types, such as <code>http</code> and <code>https</code>.
+-->
+<code>http</code> と <code>https</code> に加えて、様々な種類の URI がある。
+ライブラリによっては様々な URI スキームでのフェッチリクエストを扱い、
+賢くあろうとして、<code>file</code> のような
+想定していないスキームを参照するかもしれない。
+クライアントとサーバの作者はライブラリがリクエストをどのように扱うかを
+注意深くチェックし、<code>http</code> と <code>https</code> のような、
+特定の安全な URI 型のみのホワイトリストを作るべきである。
         </p>
       </section>
 
       <section id="security-recursive-objects">
+<!--
         <h2>Recursive Objects</h2>
+-->
+        <h2>再帰オブジェクト</h2>
         <p>
+<!--
           Servers should set a limit on how deep to recurse while resolving objects,
           or otherwise specially handle ActivityStreams objects with recursive
           references.
 	  Failure to properly do so may result in denial-of-service security
 	  vulnerabilities.
+-->
+サーバはオブジェクト、あるいは特に再帰参照を持つ ActivityStream オブジェクトの
+解決中にどれだけ深く再帰するかの制限を設定するべきである。
+これを適切に行うことに失敗すると、サービス拒否セキュリティ脆弱性を
+起こすことがある。
         </p>
       </section>
 
       <section id="security-spam">
+<!--
         <h2>Spam</h2>
+-->
+        <h2>スパム</h2>
         <p>
+<!--
           Spam is a problem in any network, perhaps especially so in federated
           networks.
           While no specific mechanism for combating spam is provided in
           ActivityPub, it is recommended that servers filter incoming content
           both by local untrusted users and any remote users through some
           sort of spam filter.
+-->
+スパムはあらゆるネットワークで問題だが、特に連合ネットワークではそうである。
+ActivityPub ではスパムと闘うための特定の機構は提供しないが、
+サーバは、ある種のスパムフィルタを通してローカルの信頼できないユーザーと全ての
+リモートユーザーの両方から入力される内容をフィルタリングすることが勧められる。
         </p>
       </section>
 
       <section id="security-federation-dos">
         <h2>Federation denial-of-service</h2>
           <p>
+<!--
             Servers should implement protections against denial-of-service
             attacks from other, federated servers.
             This can be done using, for example, some kind of ratelimiting
@@ -2291,14 +3884,29 @@ Location: https://dustycloud.org/likes/345
             around activities that involve side effects.
             Servers SHOULD also take care not to overload servers with
             submissions, for example by using an exponential backoff strategy.
+-->
+サーバは、その他の連合サーバからのサービス不能攻撃に対する防御を
+実装するべきである。
+これは、例えば、ある種のレート制限機構のようなものを使うことで実現できる。
+サーバは特に、副作用を引き起こすアクティビティに関する
+この保護を実装することに注意するべきである。
+サーバは、例えば指数バックオフ戦略を使うことで、
+送信することでサーバを過負荷にしないように気を使うべきである(SHOULD)。
           </p>
       </section>
 
       <section id="security-c2s-ratelimiting">
+<!--
         <h2>Client-to-server ratelimiting</h2>
+-->
+        <h2>クライアントからサーバへの通信量制限</h2>
           <p>
+<!--
             Servers should ratelimit API client submissions.
             This serves two purposes:
+-->
+サーバは API クライアント提案を通信制限するべきである。
+これは二つの目的がある:
             <ol>
               <li>
                 It prevents malicious clients from conducting
@@ -2317,9 +3925,18 @@ Location: https://dustycloud.org/likes/345
       <section id="security-c2s-response-dos">
         <h2>Client-to-server response denial-of-service</h2>
         <p>
+<!--
           In order to prevent a client from being overloaded by oversized
           Collections, servers should take care to limit the size of Collection 
           pages they return to clients.
+          Clients should still be prepared to limit the size of
+          responses they are willing to handle in case they connect to malicious or
+          compromised servers, for example by timing out and generating
+          an error.
+-->
+大きすぎるコレクションによってクライアントが過負荷になることを防ぐために、
+サーバはクライアントに返すコレクションページの大きさを制限することに
+注意するべきである。
           Clients should still be prepared to limit the size of
           responses they are willing to handle in case they connect to malicious or
           compromised servers, for example by timing out and generating
@@ -2328,21 +3945,39 @@ Location: https://dustycloud.org/likes/345
       </section>
 
       <section id="security-sanitizing-content">
+<!--
         <h2>Sanitizing Content</h2>
+-->
+        <h2>内容のサニタイズ</h2>
         <p>
+<!--
           Any activity field being rendered for browsers (or other rich
           text enabled applications) should take care to sanitize fields
           containing markup to prevent cross site scripting attacks.
+-->
+ブラウザ(またはその他のリッチテキストが有効なアプリケーション)で
+レンダリングされる全てのアクティビティフィールドは、
+クロスサイトスクリプト攻撃を防ぐために、マークアップを含む
+フィールドのサニタイズに注意するべきである。
         </p>
       </section>
 
       <section id="security-not-displaying-bto-bcc">
         <h2>Not displaying bto and bcc properties</h2>
         <p>
+<!--
           <code>bto</code> and <code>bcc</code> already
           <a href="#remove-bto-bcc-before-delivery">must be removed for delivery</a>,
           but servers are free to decide how to represent the object
           in their own storage systems.
+          However, since <code>bto</code> and <code>bcc</code> are only intended
+          to be known/seen by the original author of the object/activity,
+          servers should omit these properties during display as well.
+-->
+<code>bto</code> と <code>bcc</code> はすでに、
+<a href="#remove-bto-bcc-before-delivery">配送時に削除されなければならない</a>が、
+しかしサーバは自身のストレージシステムの中でオブジェクトをどのように表現するか
+自由に決定できる。
           However, since <code>bto</code> and <code>bcc</code> are only intended
           to be known/seen by the original author of the object/activity,
           servers should omit these properties during display as well.

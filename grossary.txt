@@ -1,0 +1,2 @@
+side effect	副作用
+addressing	アドレス指定
